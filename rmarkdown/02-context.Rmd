@@ -1,0 +1,9 @@
+# Context
+
+Particulate matter less than 2.5µm in diameter (PM~2.5~) is an air pollutant known to be harmful to human health even at low concentrations. Due to the size, particles can lodge deep within the lungs and pass into blood, affecting respiratory and cardiovascular systems. The risks associated with PM~2.5~ exposure are reflected in the [most recent WHO guidelines](https://www.who.int/publications/i/item/9789240034228). These guidelines, released in 2021, set a series of interim targets of decreasing PM~2.5~ concentrations and an end target annual average not exceeding 5µg/m^3^.
+
+While there are multiple contributors to PM~2.5~ pollution (such as industrial emissions, dust, wood heater smoke), bushfires in particular are a major source of PM~2.5~ in Australia, ranging from controlled hazard reduction burns to the extraordinary bushfire season of 2019-2020. Health effects from the PM~2.5~ produced from such burns (as opposed to non-bushfire PM~2.5~) are not well-researched, in part due to limited data availability of bushfire-specific PM~2.5~.
+
+This dataset provides a prediction of total PM~2.5~ concentration and flags to estimate the bushfire-specific portion, covering Australia from January 2001 to June 2020. In conjunction with health data, it may be used to elucidate the health burden and impacts due to bushfire smoke PM~2.5~ and plan for the mitigation of health effects in the future, particularly with increasing threat of unusually severe bushfire events.
+
+<!-- Check if link/include JS's lit review, or add pertinent references -->

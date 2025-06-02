@@ -1,0 +1,100 @@
+--- 
+title: "Bushfire-specific PM~2.5~ V1.3 Dataset (Last edited on `r Sys.Date()`)"
+author: "Bushfire Smoke Exposures Team"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(lubridate)
+library(terra)
+library(data.table)
+library(ggplot2)
+# displayed date and location
+dd <- as.Date("2013-10-17")
+place_name <- "Lithgow (NSW)"
+place_feature <- "This location was affected by the nearby State Mine bushfire" # for caption
+crds <- data.frame(lon = 150.162346, lat = -33.488082)
+
+caption_raster <- sprintf('Raster map of total PM2.5 (ug/m3) for Australia on %s. %s is marked with a white cross, corresponding to the location of the STL decomposition shown below.', dd, place_name)
+caption_stl <- sprintf('STL decomposition of total PM2.5 (ug/m3) into trend, seasonal and remainder components for pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
+
+infile <- sprintf("~/CARDAT/ResearchProjects_CAR/Bushfire_Smoke_PM_Exposures/Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", year(dd))
+
+v_crds <- project(vect(crds, crs = "epsg:4326"), "epsg:3577")
+```
+
+# Overview
+
+<style type="text/css">
+p.caption {
+  color: grey;
+  font-size: smaller;
+}
+</style>
+
+The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated PM~2.5~ concentration covering Australia. It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components, and a series of flags that may be used to predict bushfire smoke events.
+
+```{r img-pm25, fig.cap=caption_raster}
+r_plt <- rast(infile, "pm25_pred")
+r_plt <- r_plt[[which(time(r_plt) == dd)]]
+r_plt <- terra::project(r_plt, "epsg:4326")
+
+plot(r_plt["pm25_pred"])
+points(project(v_crds, r_plt), cex = 1.5, col = "white", pch = 4)
+```
+
+```{r img-stl, fig.cap=caption_stl}
+vars <- c("pm25_pred", "trend", "seasonal", "remainder")
+
+dat <- lapply(vars, function(i){
+  r <- rast(infile, i)
+  e <- transpose(extract(r, v_crds, ID = F, ))
+  setDT(e)
+  setnames(e, "value")
+  e[, `:=`(date = time(r),
+           variable = i)]
+  return(e)
+})
+dat <- rbindlist(dat)
+setcolorder(dat, c("variable", "date", "value"))
+dat[, variable := factor(variable, levels = c("remainder", "seasonal", "trend", "pm25_pred"))]
+
+ggplot(dat, aes(x = date, y = value)) + 
+  geom_line() + 
+  facet_wrap(~ variable, ncol = 1, scales = "free") + 
+  geom_vline(xintercept = dd, col = "red", lty = "dotted") +
+  ylab(substitute("PM~2.5~ (ug/m^3^)"))
+
+```
+
+The initial dataset ([Bushfire_specific_PM25_Aus_2001_2020_v1_3][dset-2001-2020-metadata]) was modelled and predicted on 2001-2020 data covering mainland Australia and Tasmania in a 5km resolution grid, using a random forest model. This PM2.5 prediction was decomposed using the STL method to trend, seasonal and remainder components for each pixel. A series of binary flags were also extracted for each pixel, indicating presence of fires, dust or high temperature in or near the pixel.
+
+Subsequently, this model was used to extend predictions to the years 2020-2023 ([Bushfire_specific_PM25_Aus_2020_2023_v1_3][dset-2020-2023-metadata]) with an accompanying STL decomposition.
+
+The dataset is available on request for research purposes. It is managed by the [Clean Air Research Data and Analysis Technology][cardat-home] (CARDAT) team of the [Centre for Safe Air][csa-home] (CSA). Please submit an access request through the [CARDAT Data Access Form][cardat-form].
+
+## Acknowledgements {-}
+
+The development of the **Bushfire-specific PM~2.5~ 2001-2020 V1.3** dataset and associated **Bushfire-specific PM~2.5~ for locations 2001-2020 V1.3 Workflow** tool was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
+
+We acknowledge the Sydney Informatics Hub and the University of Sydney’s high performance computing cluster Artemis for providing the high performance computing resources on which the **Bushfire-specific PM~2.5~ V1.3** datasets were generated.
+ 
+We would also like to thank Dana Jordan for her assistance during the QA/QC process.
+
+<!-- Links -->
+<!-- Dataset pages -->
+[dset-2001-2020-doi]: https://doi.org/10.17605/OSF.IO/WQK4T 
+[dset-2020-2023-doi]: https://doi.org/10.17605/OSF.IO/47C6B
+[dset-2001-2020-metadata]: https://cardat.github.io/data_inventory/bushfire_smoke_pm_exposures.html#bushfire_specific_pm25_aus_2001_2020_v1_3
+[dset-2020-2023-metadata]: https://cardat.github.io/data_inventory/bushfire_smoke_pm_exposures.html#bushfire_specific_pm25_aus_2020_2023_v1_3
+
+<!-- Organisation pages -->
+[csa-home]: https://safeair.org.au/
+[cardat-home]: https://cardat.github.io/
+[cardat-form]: https://cardat.github.io/data_access_request_form.html
+[ardc-home]: https://ardc.edu.au/
+[ardc-project]: https://doi.org/10.47486/DC008
+
+<!-- Other links -->
+[paper-dset]: https://doi.org/10.3390/atmos15111341
+[paper-exceptional-events]: 10.1016/j.heliyon.2024.e24532

@@ -1,0 +1,27 @@
+
+# Caveats
+
+## Extrapolated data
+
+Raster cells covering coastal areas were not well-covered by PM~2.5~ predictions as a consequence of the predictor extraction process. Some predictors were derived by point extraction at the centre of the raster cell which in some cases returned NA as the centre was over a water body. As much of Australia's population is concentrated along coastal regions, the dataset was extrapolated to missing coastal pixels. Extrapolation was performed for missing coastal pixels by: taking a focal window (size 3, queen-type contiguity) maximum on the binary flags (i.e. if any adjacent cell is flagged, the target cell is also flagged); taking a focal window (size 3) mean on the PM~2.5~ prediction and decomposition components (i.e. mean of all non-NA adjacent cells).
+
+## Missing data
+
+Due to unavailable solar exposure data, there are several missing days of prediction prior to 2010. Solar exposure data is complete from 2010 onwards.
+
+Dust flags derived from the CAMS are not available pre-2003.
+
+## Artefacts
+
+Although grid was predicted at 5km resolution, there is a noticeable grid pattern of roughly 55km resolution. This pattern matches that of MERRA-2 satellite raster grid resolution.
+
+Also visible are circular regions (particular in northern Australia) corresponding to the 100km radius buffers of the em_fire_dens_fireskm2_100000_daily predictor.
+
+There are also seemingly random small ‘patches’ in fixed positions across the daily predictions. The size and position of these patches correspond to populated regions and are related to the predictor pop_dens_10000.
+
+**%TODO% Maybe Example pic**
+
+
+## Further notes
+
+The predicted PM~2.5~ and seasonal component is occasionally negative. `prediction_out_range` indicates where the predicted PM~2.5~ fall outside the range of the response variable values provided to train the model. Consider using `prediction_out_range` and/or a conditional on the PM~2.5~ value to remove or truncate improbable values.

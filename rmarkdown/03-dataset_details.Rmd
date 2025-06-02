@@ -1,0 +1,19 @@
+# (PART) Dataset details {-}
+
+# Overview
+
+This dataset consists of daily PM2.5 predictions across Australia using the revised random forest model of the BushfireSmoke project V1.3. It corrects the input predictors of and supersedes V1.2.
+
+Data is provided in NetCDF format in the `Bushfire_Smoke_PM_Exposures/Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived` directory of the CARDAT data repository. Each NetCDF contains the predicted PM~2.5~, components of an STL decomposition of PM~2.5~ and flags that may be used to indicate probable firesmoke days. One NetCDF holds daily data of a single year, which in total cover the time period from 2001-01-01 to 2020-06-30. Spatial resolution and extent is 5km by 5km across Australia (excluding offshore territories) (EPSG:3577).
+
+## Component datasets
+
+## Data dictionary
+
+
+
+
+
+
+
+
