@@ -100,4 +100,4 @@ We would also like to thank Dana Jordan for her assistance during the QA/QC proc
 
 <!-- Other links -->
 [paper-dset]: https://doi.org/10.3390/atmos15111341
-[paper-exceptional-events]: 10.1016/j.heliyon.2024.e24532
+[paper-exceptional-events]: https://doi.org/10.1016/j.heliyon.2024.e24532
