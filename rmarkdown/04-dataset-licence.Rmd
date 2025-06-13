@@ -1,6 +1,21 @@
-# Dataset access
+# Dataset licencing
 
-## Data sharing policy
+## Data sharing and co-authorship policy
 
-## How to apply
+Our dataset represents a valuable resource for advancing public health knowledge, and we are committed to supporting high-quality research while ensuring proper recognition of our work. To this end, we have established the following policy for data sharing and potential co-authorship.
 
+1.	Researchers interested in utilising our dataset are required to submit a proposal using our provided template. This proposal should outline the intended research, including a summary of the study objectives, the planned use of our data, and any publication intentions. We particularly encourage researchers to articulate how they plan to frame their findings from a public health perspective. This proposal process serves dual purposes: it allows us to maintain comprehensive records of data usage and potential research outputs, and it provides an opportunity for initial dialogue about the proposed work.
+2.	Upon receiving a proposal, our team will review the submitted information and, if appropriate, grant approval for the specific purposes outlined. It's important to note that if there are any significant changes to the proposed research after approval, an amended proposal must be submitted for our consideration.
+3.	Acknowledgement of our dataset, using our provided text and DOI, is mandatory in any resulting publications. Beyond this basic recognition, we encourage deeper collaboration and co-authorship opportunities. An offer of co-authorship with the first and last author of the data for any publication of research utilising the data is expected. These will be evaluated based on the level of contribution of our team, following the [guidelines set forth by the International Committee of Medical Journal Editors (ICMJE)](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html).
+4.	Regarding co-authorship, we typically extend invitations to the first and last authors of our dataset paper but in some instances other authors of the data may be invited. These individuals may choose to accept or decline the offer of co-authorship based on their level of involvement and the [ICMJE criteria](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html) for authorship. This approach ensures that co-authorship accurately reflects substantial contributions to the new research while recognising the foundational work of our dataset.
+5.	We believe in maintaining open lines of communication throughout the research process. While we may not have the capacity for individual meetings with all researchers, we remain available for consultation as needed. This could involve providing methodological advice, assisting with result interpretation, or offering guidance on formulating impactful public health messages. However, it's important to note that our team reserves the right to decline co-authorship if we don't have time, or feel our contributions do not meet the established ICMJE criteria.
+6.	Before granting access to the dataset, we require researchers to agree to these terms in writing. This agreement will specify the approved use of the data as per the submitted proposal, acknowledgement requirements, the process for determining co-authorship, and any other relevant conditions.
+7.	For researchers who are co-authors of the dataset, we're open to discussing alternative arrangements. These might include citation of the dataset or inclusion of the first and last author in the co-authorship agreement depending on the nature of the proposed work and level of additional contribution required.
+
+Through this policy, we aim to strike a balance between promoting valuable research and maintaining the integrity of our data and the contributions of our team. We're committed to supporting work that advances public health knowledge while ensuring fair and appropriate attribution of scientific contributions. By providing clear guidelines on data usage, acknowledgement, and potential co-authorship, we hope to foster productive collaborations and impactful research outcomes.
+
+## Applying for data access
+
+Data access requests can be submitted through the [CARDAT Data Access Form][cardat-form], specifying the dataset (Bushfire_specific_PM25_Aus_2001_2020_v1_3, Bushfire_specific_PM25_Aus_2020_2023_v1_3, or both) requested. Please provide a reasonable description of your intended use of the data in accordance with clause (1) above.
+
+Note that these data are otherwise restricted and may not be used for any purposes beyond that described in your request without explicit permission.

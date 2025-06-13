@@ -1,5 +1,5 @@
 --- 
-title: "Bushfire-specific PM~2.5~ V1.3 Dataset (Last edited on `r Sys.Date()`)"
+title: "Bushfire-specific PM~2.5~ V1.3 data (Last edited on `r Sys.Date()`)"
 author: "Bushfire Smoke Exposures Team"
 ---
 
@@ -18,7 +18,10 @@ crds <- data.frame(lon = 150.162346, lat = -33.488082)
 caption_raster <- sprintf('Raster map of total PM2.5 (ug/m3) for Australia on %s. %s is marked with a white cross, corresponding to the location of the STL decomposition shown below.', dd, place_name)
 caption_stl <- sprintf('STL decomposition of total PM2.5 (ug/m3) into trend, seasonal and remainder components for pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
 
-infile <- sprintf("~/CARDAT/ResearchProjects_CAR/Bushfire_Smoke_PM_Exposures/Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", year(dd))
+infile <- file.path(datadir,
+                    sprintf("Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", 
+                            year(dd))
+)
 
 v_crds <- project(vect(crds, crs = "epsg:4326"), "epsg:3577")
 ```
@@ -75,7 +78,7 @@ The dataset is available on request for research purposes. It is managed by the 
 
 ## Acknowledgements {-}
 
-The development of the **Bushfire-specific PM~2.5~ 2001-2020 V1.3** dataset and associated **Bushfire-specific PM~2.5~ for locations 2001-2020 V1.3 Workflow** tool was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
+The development of the **Bushfire-specific PM~2.5~ 2001-2020 V1.3** dataset was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
 
 We acknowledge the Sydney Informatics Hub and the University of Sydney’s high performance computing cluster Artemis for providing the high performance computing resources on which the **Bushfire-specific PM~2.5~ V1.3** datasets were generated.
  
