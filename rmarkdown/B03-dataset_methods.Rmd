@@ -1,6 +1,8 @@
 # Methodology
 
-A brief description of the methodology follows. Please consult the [journal publication][paper-dset] for full details.
+A brief description of the methodology follows. Full description can be found in 
+
+> Borchers-Arriagada, N., Morgan, G.G., Buskirk, J.V., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
 
 ## Estimating absolute magnitude PM~2.5~
 
