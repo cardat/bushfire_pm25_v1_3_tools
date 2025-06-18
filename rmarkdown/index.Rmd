@@ -10,12 +10,12 @@ library(terra)
 library(data.table)
 library(ggplot2)
 # displayed date and location
-dd <- as.Date("2013-10-17")
+dd <- as.Date("2013-10-18")
 place_name <- "Lithgow (NSW)"
 place_feature <- "This location was affected by the nearby State Mine bushfire" # for caption
 crds <- data.frame(lon = 150.162346, lat = -33.488082)
 
-caption_raster <- sprintf('Raster map of total PM2.5 (ug/m3) for Australia on %s. %s is marked with a white cross, corresponding to the location of the STL decomposition shown below.', dd, place_name)
+caption_raster <- sprintf('Raster map of total PM2.5 (ug/m3) for Australia on %s. %s is marked with a white diamond, corresponding to the location of the STL decomposition shown below.', dd, place_name)
 caption_stl <- sprintf('STL decomposition of total PM2.5 (ug/m3) into trend, seasonal and remainder components for pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
 
 infile <- file.path(datadir,
@@ -23,7 +23,8 @@ infile <- file.path(datadir,
                             year(dd))
 )
 
-v_crds <- project(vect(crds, crs = "epsg:4326"), "epsg:3577")
+v_crds.wgs84 <- vect(crds, crs = "epsg:4326")
+v_crds <- project(v_crds.wgs84, "epsg:3577")
 ```
 
 # Overview
@@ -42,8 +43,14 @@ r_plt <- rast(infile, "pm25_pred")
 r_plt <- r_plt[[which(time(r_plt) == dd)]]
 r_plt <- terra::project(r_plt, "epsg:4326")
 
-plot(r_plt["pm25_pred"])
-points(project(v_crds, r_plt), cex = 1.5, col = "white", pch = 4)
+focus_bounds <- buffer(v_crds.wgs84, 500000)
+r_plt.focus <- crop(r_plt, focus_bounds)
+
+
+plot(r_plt.focus)
+points(v_crds.wgs84, cex = 1.5, col = "red", pch = 18)
+sbar(100, type = "bar", below = "km", xy = "topright")
+inset(r_plt, box=ext(focus_bounds), scale=.4, loc="bottomright", background="light yellow", pbox=list(lwd=1, lty=1, col="red"))
 ```
 
 ```{r img-stl, fig.cap=caption_stl}
