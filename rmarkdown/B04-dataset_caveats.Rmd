@@ -6,11 +6,16 @@ Due to the unavailability of solar exposure data, there are several missing days
 
 Dust flags derived from the CAMS are not available pre-2003.
 
-Due to unavailability of landscape fire data before November 2020 (the basis of active_fire predictors), predictions could not be extended pre-2001.
+Due to unavailability of landscape fire data before November 2020 (the basis of `active_fire` predictors), PM~2.5~ could not be estimated for years pre-2001.
 
-## Negative predicted PM~2.5~
+## Negative predicted PM~2.5~ values
 
-The predicted PM~2.5~ is occasionally negative. `prediction_out_range` indicates where the predicted PM~2.5~ fall outside the range of the response variable values provided to train the model. Consider using `prediction_out_range` and/or a conditional on the PM~2.5~ value to remove or truncate improbable values.
+The predicted PM~2.5~ is occasionally negative. This could be a consequence of the training data, which allowed negatives in the response variables. It may also be a result of the application of the model to environments dissimilar to the locations in the training data. Most observational monitors are located in populated areas and close to human infrastructure, and therefore the model may be less accurate in rural or unpopulated regions.
+
+The `prediction_out_range` variable indicates where the predicted PM~2.5~ fall outside the range of the response variable values provided to train the model. There are a variety of methods to handle negative values:
+
+- consider using `prediction_out_range` and/or a conditional on the PM~2.5~ value to identify improbable values.
+- if improbable/implausible, consider removing these values (and conducting an interpolation to fill if needed) or truncating to some chosen threshold
 
 ## Infilled data
 
