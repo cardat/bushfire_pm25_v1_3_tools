@@ -1,13 +1,16 @@
 # (PART) Dataset details {-}
 
-# Overview
+# Metadata
 
-This dataset consists of daily PM2.5 predictions across Australia using the revised random forest model of the BushfireSmoke project V1.3. It corrects the input predictors of and supersedes V1.2.
+These datasets consists of daily PM2.5 predictions across Australia using the revised random forest model of the Bushfire Smoke project V1.3. It corrects the input predictors of and supersedes V1.2.
 
-Data is provided in NetCDF format in the `data_derived/` directory of the dataset folder. Each NetCDF contains the predicted PM~2.5~, components of an STL decomposition of PM~2.5~ and flags that may be used to indicate probable firesmoke days. One NetCDF holds daily data of a single year, which in total cover the time period from 2001-01-01 to 2020-06-30. Spatial resolution and extent is 5km by 5km across Australia (excluding offshore territories) (EPSG:3577).
+Data is provided in NetCDF format in the `data_derived/` directory of each dataset folder.  Spatial resolution and extent of the raster is 5km by 5km across Australia (excluding offshore territories) (EPSG:3577). Variables include:
 
+- daily total predicted PM~2.5~ (µg/m^3^) from the random forest model
+- STL decomposition components of total PM~2.5~
+- Daily firesmoke flags for indication of bushfire events
 
-A brief description of the methodology can be found in the section [Methodology[#methodology]. Background and detail of the development of this data has been published in:
+A brief description of the methodology can be found in the section [Methodology](#methodology). Background and detail of the development of this data has been published in:
 
 > Borchers-Arriagada, N., Morgan, G.G., Van Buskirk, J., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
 
@@ -15,24 +18,30 @@ A brief description of the methodology can be found in the section [Methodology[
 
 ### Bushfire_specific_PM25_Aus_2001_2020_v1_3
 
-•	Total predicted PM2.5
-Daily PM2.5 predictions (total magnitude) from the random forest model
-pm25_pred
-•	STL decomposition
-Daily STL decomposition of PM2.5 predictions
-remainder, seasonal, trend
-•	Flags
-Daily firesmoke flags for indication of bushfire events (see section Flags for more detail)
-active_fires_*, dust_merra_*, dust_cams_*, whs_*, smoke_p95_v1_3, trimmed_smoke_2SD_v1_3
+This is the original dataset as described in the published paper and covers days from 2001-01-01 to 2020-06-30. The random forest model was trained on observational daily data from this entire time period, then used to predict over the 5km grid. The total PM~2.5~ predicted was then broken down into trend, seasonal and remainder components for each pixel through STL decomposition over 2001-2019 (see [Methodology - STL decomposition](#methodology-stl)), excluding 2020 due to the exceptional bushfire events of 2019-2020. STL components for 2020 were filled by assuming identical seasonal and trend components for 2019 and 2020, calculating the 2020 remainder component as the difference between total PM~2.5~ (2020) and seasonal + trend (2019).
 
+Statistical thresholds for extreme PM~2.5~ were calculated for each pixel - both the 95th percentile of predicted PM~2.5~ and standard deviation of the trimmed (to 99th percentile) remainder.
+
+Binary flags for identification of bushfire events were then produced from the statistical thresholds and other external data sources (see Table \@ref(tab:data-dictionary-flags) for full listing of flags): 
+
+* active fires from MODIS satellite
+* dust from MERRA-2 satellites
+* dust from CAMS satellite
+* temperature from BoM AWAP grids
+
+Daily predicted PM~2.5~, STL components and binary flags are stored as a NetCDF file by year in the `data_derived/` directory. The calculated statistical thresholds are stored in `data_derived_raw_flags/`, also as NetCDFs. Note each threshold is a single layer (no time component) as both have been calculated over all years.
 
 ### Bushfire_specific_PM25_Aus_2020_2023_v1_3
 
-Contains the predicted PM2.5, produced same as the original 2001-2020 dataset. STL decomposition only over 2020-2023 period, omitting 2020 due to exceptional bushfire events of 2019-2020. STL therefore may have discontinuity with those of the original dataset 
+The 2020-2023 update uses the original random model (trained on 2001-2020 data) to predict daily PM~2.5~ from 2020-01-01 to 2023-12-31. STL decomposition was performed with only 2021-2023 data, omitting 2020 data as in the original dataset. 2020 STL components were infilled by assuming identical trend and seasonal components as 2021, and taking the difference between total PM~2.5~ (2020) and seasonal + trend (2021) to be the remainder component.
+
+Consequently the STL components for the overlapping period of the two datasets (2020-01-01 to 2020-06-30) are not identical There may also be discontinuity of STL components when considering time periods extending over both datasets.
+
+Both predicted PM~2.5~ and STL components are available in the `data_derived/` folder as NetCDF files by year. Statistical thresholds and other flags were not produced.
 
 ## Data dictionary
 
-```{r data-dictionary, tab.cap='Description of non-firesmoke flag variables available in data.'}
+```{r data-dictionary, tab.cap='Description of non-firesmoke flag variables available for both 2001-2020 and 2020-2023 datasets.'}
 ls_data_dict.pm25_stl <- list(c("pm25_pred", "Total predicted PM2.5 (µg/m3)"), 
                            c("seasonal", "Seasonal component of PM2.5 STL decomposition (µg/m3)"),
                            c("trend", "Trend component of PM2.5 STL decomposition (µg/m3)"),
@@ -78,8 +87,6 @@ knitr::kable(data_dict.flags)
 
 ```
 
-
-
-
+Further description of the STL components in Table \@ref(tab:data-dictionary) and flags in Table \@ref(tab:data-dictionary-flags) is given in section [Methodology](#methodology). 
 
 
