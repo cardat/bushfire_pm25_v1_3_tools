@@ -6,7 +6,13 @@ Due to the unavailability of solar exposure data, there are several missing days
 
 Dust flags derived from the CAMS are not available pre-2003.
 
-## Extrapolated data
+Due to unavailability of landscape fire data before November 2020 (the basis of active_fire predictors), predictions could not be extended pre-2001.
+
+## Negative predicted PM~2.5~
+
+The predicted PM~2.5~ is occasionally negative. `prediction_out_range` indicates where the predicted PM~2.5~ fall outside the range of the response variable values provided to train the model. Consider using `prediction_out_range` and/or a conditional on the PM~2.5~ value to remove or truncate improbable values.
+
+## Infilled data
 
 Raster cells covering coastal areas were not well-covered by PM~2.5~ predictions as a consequence of the predictor extraction process. For predictors in raster format, values were extracted to the prediction grid through point extraction - for each grid cell, the value of the predictor raster at the centre of that cell. This returned NA if the centre of the cell lay over a water body and was not covered by the predictor raster. 
 
@@ -23,7 +29,3 @@ Although grid was predicted at 5km resolution, there is a noticeable grid patter
 Also visible are circular regions (particular in northern Australia) corresponding to the 100km radius buffers of the em_fire_dens_fireskm2_100000_daily predictor.
 
 There are also seemingly random small ‘patches’ in fixed positions across the daily predictions. The size and position of these patches correspond to populated regions and are related to the predictor pop_dens_10000.
-
-## Further notes
-
-The predicted PM~2.5~ is occasionally negative. `prediction_out_range` indicates where the predicted PM~2.5~ fall outside the range of the response variable values provided to train the model. Consider using `prediction_out_range` and/or a conditional on the PM~2.5~ value to remove or truncate improbable values.
