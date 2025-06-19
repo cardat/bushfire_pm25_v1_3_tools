@@ -36,7 +36,9 @@ p.caption {
 }
 </style>
 
-The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures.
+The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures. This dataset accompanies the following publication:
+
+> Borchers-Arriagada, N., Morgan, G.G., Buskirk, J.V., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
 
 ```{r img-pm25, fig.cap=caption_raster, cache = TRUE}
 r_plt <- rast(infile, "pm25_pred")
