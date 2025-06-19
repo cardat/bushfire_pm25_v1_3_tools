@@ -15,8 +15,8 @@ place_name <- "Lithgow (NSW)"
 place_feature <- "This location was affected by the nearby State Mine bushfire" # for caption
 crds <- data.frame(lon = 150.162346, lat = -33.488082)
 
-caption_raster <- sprintf('Raster map of total PM2.5 (ug/m3) for Australia on %s. %s is marked with a white diamond, corresponding to the location of the STL decomposition shown below.', dd, place_name)
-caption_stl <- sprintf('STL decomposition of total PM2.5 (ug/m3) into trend, seasonal and remainder components for pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
+caption_raster <- sprintf('Raster map of total PM2.5 (µg/m3) for Australia on %s. %s is marked with a white diamond, corresponding to the location of the STL decomposition shown below.', dd, place_name)
+caption_stl <- sprintf('STL decomposition of total PM2.5 (µg/m3) into trend, seasonal and remainder components for pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
 
 infile <- file.path(datadir,
                     sprintf("Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", 
@@ -36,9 +36,9 @@ p.caption {
 }
 </style>
 
-The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated PM~2.5~ concentration covering Australia. It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components, and a series of flags that may be used to predict bushfire smoke events.
+The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures.
 
-```{r img-pm25, fig.cap=caption_raster}
+```{r img-pm25, fig.cap=caption_raster, cache = TRUE}
 r_plt <- rast(infile, "pm25_pred")
 r_plt <- r_plt[[which(time(r_plt) == dd)]]
 r_plt <- terra::project(r_plt, "epsg:4326")
@@ -47,13 +47,14 @@ focus_bounds <- buffer(v_crds.wgs84, 500000)
 r_plt.focus <- crop(r_plt, focus_bounds)
 
 
-plot(r_plt.focus)
+plot(r_plt.focus, 
+     plg=list(title = substitute("PM"[2.5]*" (µg/m"^3*")")))
 points(v_crds.wgs84, cex = 1.5, col = "red", pch = 18)
 sbar(100, type = "bar", below = "km", xy = "topright")
 inset(r_plt, box=ext(focus_bounds), scale=.4, loc="bottomright", background="light yellow", pbox=list(lwd=1, lty=1, col="red"))
 ```
 
-```{r img-stl, fig.cap=caption_stl}
+```{r img-stl, fig.cap=caption_stl, cache = TRUE}
 vars <- c("pm25_pred", "trend", "seasonal", "remainder")
 
 dat <- lapply(vars, function(i){
@@ -67,21 +68,21 @@ dat <- lapply(vars, function(i){
 })
 dat <- rbindlist(dat)
 setcolorder(dat, c("variable", "date", "value"))
-dat[, variable := factor(variable, levels = c("remainder", "seasonal", "trend", "pm25_pred"))]
+dat[, variable := factor(variable, levels = c("remainder", "seasonal", "trend", "pm25_pred"),
+                         labels = c("Remainder", "Seasonal", "Trend", "Total PM2.5"))]
 
 ggplot(dat, aes(x = date, y = value)) + 
   geom_line() + 
   facet_wrap(~ variable, ncol = 1, scales = "free") + 
   geom_vline(xintercept = dd, col = "red", lty = "dotted") +
-  ylab(substitute("PM~2.5~ (ug/m^3^)"))
+  xlab("Date") +
+  ylab(substitute("PM"[2.5]*" (µg/m"^3*")"))
 
 ```
 
-The initial dataset ([Bushfire_specific_PM25_Aus_2001_2020_v1_3][dset-2001-2020-metadata]) was modelled and predicted on 2001-2020 data covering mainland Australia and Tasmania in a 5km resolution grid, using a random forest model. This PM2.5 prediction was decomposed using the STL method to trend, seasonal and remainder components for each pixel. A series of binary flags were also extracted for each pixel, indicating presence of fires, dust or high temperature in or near the pixel.
+Read more about the dataset and its development in the [Overview](#overview) and [Methodology](#methodology).
 
-Subsequently, this model was used to extend predictions to the years 2020-2023 ([Bushfire_specific_PM25_Aus_2020_2023_v1_3][dset-2020-2023-metadata]) with an accompanying STL decomposition.
-
-The dataset is available on request for research purposes. It is managed by the [Clean Air Research Data and Analysis Technology][cardat-home] (CARDAT) team of the [Centre for Safe Air][csa-home] (CSA). Please submit an access request through the [CARDAT Data Access Form][cardat-form].
+The dataset is available on request for research purposes. It is managed by the [Clean Air Research Data and Analysis Technology][cardat-home] (CARDAT) team of the [Centre for Safe Air][csa-home] (CSA). Please **read the full [data sharing policy](#dataset-licencing) and submit an access request through the [CARDAT Data Access Form][cardat-form]**.
 
 ## Acknowledgements {-}
 
