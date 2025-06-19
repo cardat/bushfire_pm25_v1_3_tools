@@ -1,4 +1,4 @@
-# Dataset licencing
+# Dataset licencing {#dataset-licencing}
 
 ## Data sharing and co-authorship policy
 
@@ -16,6 +16,6 @@ Through this policy, we aim to strike a balance between promoting valuable resea
 
 ## Applying for data access
 
-Data access requests can be submitted through the [CARDAT Data Access Form][cardat-form], specifying the dataset (Bushfire_specific_PM25_Aus_2001_2020_v1_3, Bushfire_specific_PM25_Aus_2020_2023_v1_3, or both) requested. Please provide a reasonable description of your intended use of the data in accordance with clause (1) above.
+Data access requests can be submitted through the [CARDAT Data Access Form][cardat-form], specifying the dataset (*Bushfire_specific_PM25_Aus_2001_2020_v1_3*, *Bushfire_specific_PM25_Aus_2020_2023_v1_3*, or both) requested. Please provide a reasonable description of your intended use of the data in accordance with clause **(1)** above, and understand the expectations regarding acknowledgement (clause **(3)**) and co-authorship (clause **(4)**).
 
-Note that these data are otherwise restricted and may not be used for any purposes beyond that described in your request without explicit permission.
+Note that these data are otherwise restricted and may not be on-shared or used for any purposes beyond that described in your request without explicit permission.
