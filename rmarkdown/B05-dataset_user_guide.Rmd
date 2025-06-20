@@ -1,0 +1,127 @@
+# User guide
+
+## Demo `R` code
+
+```{r, include=F}
+# set working directory to Bushfire Smoke Exposure data directory for demo code
+currdir <- getwd()
+knitr::opts_knit$set(root.dir = datadir)
+```
+
+### Read metadata with `ncdf4`
+
+To read metadata from the NetCDF, use the `ncdf4` package.
+
+```{r example-r-ncdf4, echo=T}
+library(ncdf4)
+# select file
+infile <- "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc"
+
+## read netCDF
+nc <- ncdf4::nc_open(infile)
+# nc                              # show summary overview
+
+## show variable names
+names(nc$var)
+
+## show global attributes
+names(ncatt_get(nc, 0))
+
+# ncatt_get(nc, 0, "comment")     # read selected global attribute
+```
+
+### Read data with `terra`
+
+The `terra` package can read and manipulate both raster data (as provided here) and vector data. See [full documentation](https://rspatial.github.io/terra/index.html) for more.
+
+```{r example-r-terra, echo=T}
+library(terra)
+# select file
+infile <- "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc"
+
+# Read NetCDF
+sdset <- sds(infile)
+sdset                             # show summary of NetCDF contents
+
+names(sdset)                      # show layers/variables
+
+# Look at specific layer/variable raster
+r <- sdset[["pm25_pred"]]
+
+# time(r)                         # time component of raster
+# values(r)                       # values of raster as a matrix
+r                                 # show summary of raster
+
+```
+
+Plots and further geospatial processing may be performed with `terra`:
+
+```{r example-r-terra-geoprocess}
+library(terra)
+library(data.table)
+
+# Read STL components and extract at a location
+# set location
+v <- vect(matrix(c(150.994659, -33.921600), nrow = 1), crs = "epsg:4326")
+  
+lyrs <- c("trend", "seasonal", "remainder", "pm25_pred")
+
+# extract timeseries for each variable
+extract_ts <- lapply(lyrs, function(x) {
+  r <- sdset[[x]]                 # read raster variable
+  e <- extract(r, project(v, r))  # extract at given locations
+  setDT(e)
+  e <- melt(e, id.vars = "ID", variable.factor = F)    # reshape to long
+  e$date <- time(r)               # add date column
+  e$variable <- x                 # overwrite variable column with sensible name
+  return(e)
+})
+dat_ts <- rbindlist(extract_ts) # bind all extracted variables into single table
+str(dat_ts)
+
+par(mfrow = c(2,2))
+plot(dat_ts[dat_ts$variable == "pm25_pred", .(date, value)], col = "black", type = "l", 
+     main = "Total PM2.5 (µg/m3)")
+plot(dat_ts[dat_ts$variable == "trend", .(date, value)], type = "l",
+     main = "PM2.5 (trend component) (µg/m3)")
+plot(dat_ts[dat_ts$variable == "seasonal", .(date, value)], type = "l",
+     main = "PM2.5 (seasonal component) (µg/m3)")
+plot(dat_ts[dat_ts$variable == "remainder", .(date, value)], type = "l",
+     main = "PM2.5 (remainder component) (µg/m3)")
+
+```
+
+### Read data with `stars`
+
+The `stars` package is intended to handle raster data only. Vector geospatial data can be read by `terra` or `sf` instead. Consult the [documentation for `stars`](https://r-spatial.github.io/stars/index.html), particularly the [article on reading NetCDFs](https://r-spatial.github.io/stars/articles/stars8.html).
+
+```{r example-r-stars, echo=T, message=F}
+library(stars)
+stars_nc.proxy <- stars::read_ncdf(infile, proxy = TRUE)         # read whole file as proxy
+stars_nc.proxy                                                   # view summary
+
+## Read PM2.5 only and subset by x,y,time dimensions
+# read all x and y, read 7 days from 182nd day of year
+stars_nc <- stars::read_ncdf(infile, var = "pm25_pred", 
+                             ncsub = cbind(start = c(1, 1, 182),
+                                           count = c(NA, NA, 7)))
+# visualise
+plot(stars_nc, breaks = "quantile", col = RColorBrewer::brewer.pal(9, "Reds"))
+
+```
+
+```{r, include=F}
+# Set working directory back to previous
+knitr::opts_knit$set(root.dir = currdir)
+```
+
+## GIS software
+
+NetCDFs may be visualised interactively and manipulated in **[QGIS](https://qgis.org/)** (free and open-source) or **ArcGIS** (proprietary).
+
+## Previous workshops
+
+- Hacky Hour: *Bushfire Smoke V1.3 PM2.5 data and coding with generative AI*
+    + Code repository: https://github.com/cardat/DatSciTrain_bushfire_specific_pm25_for_locations_2019
+    + Video recording: TBA
+    
