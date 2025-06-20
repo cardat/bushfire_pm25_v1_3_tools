@@ -26,6 +26,9 @@ As much of Australia's population is concentrated along coastal regions, the dat
 - calculating a focal window (size 3, queen-type contiguity) maximum on the binary flags (i.e. if any adjacent cell is flagged, the target cell is also flagged); and
 - calculating a focal window (size 3) mean on the PM~2.5~ prediction and decomposition components (i.e. mean of all non-NA adjacent cells)
 
+
+Additionally, flags were originally extracted for the superseded V1.2 grid and were remapped to the V1.3 grid (rather than performing a full extraction for the V1.3 grid). As the V1.2 grid did not entirely cover the V1.3 grid, flags were extrapolated by taking a 15km buffer on unmapped grid points and setting the flag to 1 if any V1.2 grid cell within the buffer was flagged 1.
+
 ## Artefacts
 
 Predicted PM~2.5~ was produced on a grid of 5km resolution but may not vary smoothly across the entirety of the extent due to the limited resolution of input predictors.
