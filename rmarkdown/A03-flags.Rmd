@@ -1,0 +1,24 @@
+# Flags
+
+<!-- Explain reasoning for flags (identifying dust, active fires, wood heater smoke) -->
+
+# Identification of bushfire-specific PM~2.5~
+
+The absolute PM~2.5~ and STL decomposition remainder can be used to indicate unusually high PM~2.5~ days (e.g. days with a remainder > 2SD of remainder). However, this does not differentiate between sources, of which dust and wood heater smoke are major contributors in Australia.
+
+Thus, the binary flags are provided to aid in differentiating days of high PM~2.5~ due to bushfires and those due to other sources. 
+
+The flags consist of:
+
+- active fires within a certain buffer
+    - this is derived from satellite and thus may not pick up active fires in cloudy conditions
+- dust particles above a certain percentile (satellite-derived)
+- temperature below a certain threshold
+    - used as a proxy for likely wood heater use (the warmer the less likely wood heaters are used)
+- daily PM~2.5~ above 99th percentile and remainder above 2SD
+    - general indication of unusually high PM~2.5~
+
+Some combination of the flags can thus provide an indication of whether that particular day's PM~2.5~ is likely due to firesmoke. There is no definitive rule on which combination should be used. Rather, the choice should be guided by the study question and scope. The user should also consider using any additional data available in their study region to compare with or validate the predictions of bushfire-specific smoke.
+
+<!-- We suggest using the flags indicated by the first model described below as a starting point - this is classification and regression tree (CART) model trained using a set of known bushfire events. Following the CART model, alternative combinations of flags used previously are outlined. -->
+

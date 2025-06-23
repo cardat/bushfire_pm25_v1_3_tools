@@ -1,3 +1,5 @@
+# (PART) Background {-}
+
 # Context
 
 Particulate matter less than 2.5µm in diameter (PM~2.5~) is an air pollutant known to be harmful to human health even at low concentrations. Due to the size, particles can lodge deep within the lungs and pass into blood, affecting respiratory and cardiovascular systems. The risks associated with PM~2.5~ exposure are reflected in the [most recent WHO guidelines](https://www.who.int/publications/i/item/9789240034228). These guidelines, released in 2021, set a series of interim targets of decreasing PM~2.5~ concentrations and an end target annual average not exceeding 5µg/m^3^.

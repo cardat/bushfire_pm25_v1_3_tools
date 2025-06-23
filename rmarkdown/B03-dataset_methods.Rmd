@@ -1,30 +1,27 @@
-# Methodology
+# Methodology {#methodology}
 
-A brief description of the methodology follows. Full description can be found in 
+A summarised methodology is outlined below. The full description of methodology can be found in the following publication: 
 
 > Borchers-Arriagada, N., Morgan, G.G., Buskirk, J.V., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
 
-## Estimating absolute magnitude PM~2.5~
+## PM~2.5~ estimation
 
-This dataset consists of estimated PM~2.5~ from a random forest model, developed on a range of satellite-derived, land use, land cover, road and traffic, and weather and climate predictors. The response variable PM~2.5~ was drawn from state and territory government monitor observations, aggregated from hourly to daily level.
+A random forest model for the estimation of total PM~2.5~ concentration was developed on a range of satellite-derived, land use, land cover, road and traffic, and weather and climate predictors. The response variable PM~2.5~ was drawn from state and territory government monitor observations, aggregated from hourly to daily level.
 
-Predictors were first filtered to exclude highly correlated variables (>80%). A random forest model was run with a grid search of hyperparameters. For the optimal set of hyperparameters, the variables of importance were selected (variables with importance higher than the mean). The final random forest model was then trained on these selected variables with default hyperparameter settings.
+Predictors were first filtered to exclude highly correlated variables (>80%). A grid search of hyperparameters was performed and, for the optimal set of hyperparameters, the variables of importance were selected (variables with importance higher than the mean). The final random forest model was then trained on these selected variables with default hyperparameter settings and used to estimate PM~2.5~ for a 5km resolution grid of Australia (mainland and Tasmania).
 
-## Seasonal Decomposition model summary
+## Seasonal Decomposition model summary {#methodology-stl}
 
-Decomposition of the predicted PM~2.5~ was performed using Seasonal and Trend Decomposition using LOESS (STL), using the same method for V1.2. STL splits the total PM~2.5~ into a trend, seasonal and remainder components.
+Decomposition of the predicted PM~2.5~ was performed using Seasonal and Trend Decomposition using LOESS (STL), splitting the total PM~2.5~ into trend, seasonal and remainder components.
 
 The STL was calculated considering each grid point as a time series starting in 2001, imputing missing values with `imputeTS::na_interpolation`. A grid search of the seasonal window parameter of the STL was performed (values = 15, 25, 35, 45) and partial autocorrelation calculated of the STL using `stats::pacf`. 
 Very slight differences were observed in the partial autocorrelation when comparing seasonal windows. A seasonal window of 45 was selected on the basis of having the lowest maximum partial autocorrelation. It was also noted the higher value for seasonal window produced a more regular variation in seasonal component.
 
-Due to the extraordinary bushfire events and consequent PM~2.5~ levels of January 2020, the STL decomposition was calculated over 2001-2019 only. The decomposition of PM~2.5~ for 2020 was then extrapolated by assuming the same seasonal and trend components from 2019. The remainder component of 2020 was calculated as the differences between `total PM2.5 (2020) and (seasonal + trend (2019))`.
+Due to the extraordinary bushfire events and resulting PM~2.5~ levels in January 2020, the STL decomposition did not include data from 2020 year. Decomposition of PM~2.5~ for 2020 was instead infilled by assuming  identical seasonal and trend components to 2019 (for the 2001-2020 original dataset) or 2021 (for the 2020-2023 update). The remainder component for 2020 was then calculated as the difference between the estimated total PM~2.5~ and assumed `trend + seasonal` component.
 
-<!-- **%TODO% Example plot of STL decomposition components** -->
+## Flags {#methodology-flags}
 
-## Flags
-
-A series of binary flags (relating to dust, temperature and active fires) were produced for the Bushfire Smoke V1.2 model. These were remapped to the V1.3 grid. As the v1.2 grid did not entirely cover the v1.3 grid, flags were extrapolated by taking a 15km buffer on unmapped grid points and setting the flag to 1 if any v1.2 grid cell within the buffer was flagged 1.
-
-<!-- A full description of flags can be found in **%TODO% Ref KG's report/methods**. -->
+For each pixel, a series of binary flags to aid identification of PM~2.5~ source were extracted from a varity of satellite data and weather grids.
 
 
+A series of binary flags (relating to dust, temperature and active fires) were extracted from satellite data and weather grids. 

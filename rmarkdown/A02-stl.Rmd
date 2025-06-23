@@ -1,0 +1,93 @@
+# STL decomposition
+
+The three components (Fig. \@ref(fig:method-stl-breakdown)) capture different aspects of the total PM~2.5~ timeseries. Long-term variation (over years) is found in `trend`, which in the case shown, is a slight decrease over 2015. Year-to-year changes in PM~2.5~ are typically low (less than 1µg/m^3^) and thus `trend` does not vary significantly and instead increases or decreases over the span of years. The `seasonal` component, in contrast, represents regular fluctuations in the timeseries. Here the fluctuations tend to depend on the time of year and the seasonal component is similar (though not exactly the same) for each year. In this example, the higher `seasonal` PM~2.5~ during May to October is a reflection of the regular dry season bushfires in the Northern Territory.
+
+```{r method-stl-breakdown, cache=T, fig.cap = "STL components and total PM2.5 concentration for a pixel in Darwin (NT) for the year 2015."}
+infile <- file.path(datadir,
+                    "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2015_compressed_20231130_7.nc")
+
+v_loc <- vect(data.frame(name = "Darwin (NT)", lon = 130.944847, lat = -12.415435), crs = "epsg:4283")
+dat.stl <- lapply(vars, function(x){
+  r <- rast(infile, x)                 # read raster variable
+  e <- extract(r, project(v_loc, r), ID = F)  # extract at given locations
+  setDT(e)
+  e[, name := v_loc$name]
+  e <- melt(e, id.vars = "name", variable.factor = F)    # reshape to long
+  e$date <- time(r)               # add date column
+  e$variable <- x                 # overwrite variable column with sensible name
+  return(e)
+})
+dat.stl <- rbindlist(dat.stl)
+setcolorder(dat.stl, c("variable", "date", "value"))
+dat.stl[, variable := factor(variable, levels = c("trend", "seasonal", "remainder", "pm25_pred"),
+                         labels = c("Trend", "Seasonal", "Remainder", "Total PM2.5"))]
+
+dat.stl_cumul <- rbindlist(list(
+  dat.stl[variable == "Trend", .(variable, value), by = .(name, date)],
+  dat.stl[variable %in% c("Trend", "Seasonal"), 
+          .(variable = "Trend + Seasonal",
+            value = sum(value)), 
+          by = .(name, date)],
+  dat.stl[variable %in% c("Trend", "Seasonal", "Remainder"), 
+          .(variable = "Trend + Seasonal + Remainder (= total PM2.5)",
+            value = sum(value)), 
+          by = .(name, date)]
+  ))
+dat.stl_cumul[, variable := factor(variable, levels = c("Trend", "Trend + Seasonal", "Trend + Seasonal + Remainder (= total PM2.5)"))]
+  
+plt.disagg <- ggplot(dat.stl[variable != "PM2.5"], aes(x = date, y = value, group = variable)) + 
+  geom_line() + 
+  facet_wrap(~ variable, ncol = 1, strip.position = "left", scales = "free") +
+  xlab("Date") +
+  ylab(substitute("PM"[2.5]*" (µg/m"^3*")"))
+plt.disagg
+```
+
+The `seasonal` pattern can vary greatly from one location to another, depending on climate and the surrounding environment. While in Darwin, bushfires are expected in the dry season (winter months), south-eastern Australia typically experiences bushfires in the summer months and would see peaks of `seasonal` PM~2.5~ through December to February. High `seasonal` PM~2.5~ is also not necessarily indicative of bushfires. For instance, Launceston (Tasmania) experiences high `seasonal` PM~2.5~ through winter months, not due to bushfires but rather domestic wood heater smoke.
+
+```{r method-stl-seasonal-comparison, cache=T, fig.cap = "Comparison of seasonal components for locations of contrasting environment and climate around Australia - Darwin (NT), Campbelltown (NSW) and Launceston (Tasmania)."}
+v_loc <- vect(rbind(data.frame(name = "Darwin (NT)", lon = 130.944847, lat = -12.415435),
+                    data.frame(name = "Campbelltown (NSW)", lon = 150.807415, lat = -34.071949),
+                    data.frame(name = "Launceston (Tasmania)", lon = 147.150469, lat = -41.441564)
+                    ), crs = "epsg:4283")
+r.seasonal <- rast(infile, "seasonal")
+dat.seasonal <- terra::extract(r.seasonal, project(v_loc, r.seasonal), ID = F)
+setDT(dat.seasonal)
+setnames(dat.seasonal, strftime(time(r.seasonal), "%Y-%m-%d"))
+dat.seasonal[, name := v_loc$name]
+
+dat.seasonal <- melt(dat.seasonal, id.vars = "name", variable.factor = F, variable.name = "date")
+dat.seasonal[, date := as.Date(date)]
+
+
+ggplot(dat.seasonal, aes(x = date, y = value, group = name, col = name)) +
+  geom_line() +
+  xlab("Date") +
+  ylab(substitute("Seasonal PM"[2.5]*" (µg/m"^3*")")) +
+  scale_color_brewer(palette = "Set1") +
+  guides(colour = guide_legend(title = "City", position = "inside")) +
+  theme(legend.position.inside=c(0.01,0.99),
+        legend.justification.inside = c(0,1))
+
+```
+
+Together, the `trend` and `seasonal` components are a expectation of the PM~2.5~ concentration given the long-term and seasonal variations. The `remainder` then is the natural fluctuations around the expected value.
+
+
+```{r method-stl-cumulative, dev = 'png', message = F, fig.height = 4, fig.cap = "Cumulative addition of STL components to total PM2.5 concentration for pixel in Darwin (NT) for the year 2015."}
+library(gganimate)
+plt_animate <- 
+  ggplot(dat.stl_cumul, 
+       aes(x = date, y = value)) + 
+  geom_line() + 
+  labs(title = "{next_state}") +
+  xlab("Date") +
+  ylab(substitute("PM"[2.5]*" (µg/m"^3*")")) +
+  theme(plot.title.position = "plot") +
+  transition_states(variable, state_length = 1.5, wrap = F) +
+  ease_aes("cubic-in-out") +
+  shadow_mark(alpha = 0.2, colour = "red")
+animate(plt_animate)
+```
+
+The three STL components sum to the total PM~2.5~, illustrated in Figure \@ref(fig:method-stl-cumulative). This serves also to demonstrate conceptually the different aspects captured by the STL decomposition. Note that both the `seasonal` and `remainder` components are often negative - the `seasonal` component captures regular variations around the long-term `trend` and the `remainder` component the fluctuations around 'expectation', `trend + seasonal`.
