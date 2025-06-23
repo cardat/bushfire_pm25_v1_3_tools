@@ -56,8 +56,7 @@ r                                 # show summary of raster
 
 Plots and further geospatial processing may be performed with `terra`:
 
-```{r example-r-terra-geoprocess}
-library(terra)
+```{r example-r-terra-geoprocess, echo=T, cache=T}
 library(data.table)
 
 # Read STL components and extract at a location
@@ -95,7 +94,7 @@ plot(dat_ts[dat_ts$variable == "remainder", .(date, value)], type = "l",
 
 The `stars` package is intended to handle raster data only. Vector geospatial data can be read by `terra` or `sf` instead. Consult the [documentation for `stars`](https://r-spatial.github.io/stars/index.html), particularly the [article on reading NetCDFs](https://r-spatial.github.io/stars/articles/stars8.html).
 
-```{r example-r-stars, echo=T, message=F}
+```{r example-r-stars, cache=T, echo=T, message=F}
 library(stars)
 stars_nc.proxy <- stars::read_ncdf(infile, proxy = TRUE)         # read whole file as proxy
 stars_nc.proxy                                                   # view summary

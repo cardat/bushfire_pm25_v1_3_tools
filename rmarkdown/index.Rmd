@@ -1,6 +1,7 @@
 --- 
 title: "Bushfire-specific PM~2.5~ V1.3 data (Last edited on `r Sys.Date()`)"
 author: "Bushfire Smoke Exposures Team"
+css: css/style.css
 ---
 
 ```{r setup, include=FALSE}
@@ -9,7 +10,9 @@ library(lubridate)
 library(terra)
 library(data.table)
 library(ggplot2)
-# displayed date and location
+library(gganimate)
+
+# displayed date and location for home page
 dd <- as.Date("2013-10-18")
 place_name <- "Lithgow (NSW)"
 place_feature <- "This location was affected by the nearby State Mine bushfire" # for caption
@@ -28,13 +31,6 @@ v_crds <- project(v_crds.wgs84, "epsg:3577")
 ```
 
 # Overview
-
-<style type="text/css">
-p.caption {
-  color: grey;
-  font-size: smaller;
-}
-</style>
 
 The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures. This dataset accompanies the following publication:
 
@@ -59,21 +55,22 @@ inset(r_plt, box=ext(focus_bounds), scale=.4, loc="bottomright", background="lig
 ```{r img-stl, fig.cap=caption_stl, cache = TRUE}
 vars <- c("pm25_pred", "trend", "seasonal", "remainder")
 
-dat <- lapply(vars, function(i){
-  r <- rast(infile, i)
-  e <- transpose(extract(r, v_crds, ID = F, ))
+dat.index <- lapply(vars, function(x){
+  r <- rast(infile, x)                 # read raster variable
+  e <- extract(r, project(v_crds, r), ID = F)  # extract at given locations
   setDT(e)
-  setnames(e, "value")
-  e[, `:=`(date = time(r),
-           variable = i)]
+  e[, name := place_name]
+  e <- melt(e, id.vars = "name", variable.factor = F)    # reshape to long
+  e$date <- time(r)               # add date column
+  e$variable <- x                 # overwrite variable column with sensible name
   return(e)
 })
-dat <- rbindlist(dat)
-setcolorder(dat, c("variable", "date", "value"))
-dat[, variable := factor(variable, levels = c("remainder", "seasonal", "trend", "pm25_pred"),
+dat.index <- rbindlist(dat.index)
+setcolorder(dat.index, c("variable", "date", "value"))
+dat.index[, variable := factor(variable, levels = c("remainder", "seasonal", "trend", "pm25_pred"),
                          labels = c("Remainder", "Seasonal", "Trend", "Total PM2.5"))]
 
-ggplot(dat, aes(x = date, y = value)) + 
+ggplot(dat.index, aes(x = date, y = value)) + 
   geom_line() + 
   facet_wrap(~ variable, ncol = 1, scales = "free") + 
   geom_vline(xintercept = dd, col = "red", lty = "dotted") +
