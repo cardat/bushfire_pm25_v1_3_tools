@@ -91,3 +91,15 @@ animate(plt_animate)
 ```
 
 The three STL components sum to the total PM~2.5~, illustrated in Figure \@ref(fig:method-stl-cumulative). This serves also to demonstrate conceptually the different aspects captured by the STL decomposition. Note that both the `seasonal` and `remainder` components are often negative - the `seasonal` component captures regular variations around the long-term `trend` and the `remainder` component the fluctuations around 'expectation', `trend + seasonal`.
+
+## Quantification of bushfire-specific PM~2.5~
+
+It is important to note that the STL alone does not indicate the presence of bushfire smoke-related PM~2.5~. Instead, additional information such as the flags are required to classify days as being bushfire-affected or not.
+
+The STL decomposition does allow a degree of quantification of bushfire-specific PM~2.5~ once those bushfire-affected days are identified. Different approaches are possible and the best option will depend on the study question. 
+
+Taking, for instance, the Darwin example above (Fig. \@ref(fig:method-stl-breakdown)), the `seasonal` component includes the expected regular bushfire-related PM~2.5~ during the dry season. Increased `remainder` indicates a worse-than-usual bushfire-affected day (higher PM~2.5~) and conversely decreased `remainder` shows this day was less affected or not affected at all.
+
+Thus the difference between `remainder` and `seasonal + trend` (expectation) for a bushfire-affected day (assuming bushfires to be the dominant source of PM~2.5~) is only a partial representation of the full PM~2.5~ due to bushfires. This may be a reasonable measure if the study is concerned with exceptionally poor air quality due to bushfire events of greater than usual severity.
+
+An alternative approach is to identify a bushfire-affected day then assume all PM~2.5~ above some background level can be attributed to bushfire smoke. This is a more inclusive approach but could overestimate if there are other significant sources of PM~2.5~ on those days. Additionally, what is regarded as background is not clearly defined (e.g. could be the `trend` value, an arbitrary set value, a statistical threshold value such as the annual mean). Again, this should be considered respect to the study question.
