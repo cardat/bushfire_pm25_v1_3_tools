@@ -122,5 +122,5 @@ NetCDFs may be visualised interactively and manipulated in **[QGIS](https://qgis
 
 - Hacky Hour: *Bushfire Smoke V1.3 PM2.5 data and coding with generative AI*
     + Code repository: https://github.com/cardat/DatSciTrain_bushfire_specific_pm25_for_locations_2019
-    + Video recording: TBA
+    + Video recording: https://www.youtube.com/watch?v=A4PRnbsQT6U
     
