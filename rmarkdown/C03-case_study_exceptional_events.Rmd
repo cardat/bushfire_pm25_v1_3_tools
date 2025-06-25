@@ -1,5 +1,0 @@
-# Case study - Exceptional events
-
-Study focussed on mortality exceptional PM~2.5~ events, not bushfire-specific.
-
-[Mortality burden attributable to exceptional PM~2.5~ air pollution events in Australian cities: A health impact assessment][paper-exceptional-events]

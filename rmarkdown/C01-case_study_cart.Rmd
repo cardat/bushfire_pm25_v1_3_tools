@@ -1,0 +1,5 @@
+# (PART) Case studies {-}
+
+# CART model
+
+Classification and regression tree (CART) model trained using a set of known bushfire events. *TODO*
