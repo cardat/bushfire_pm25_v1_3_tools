@@ -74,7 +74,7 @@ ggplot(dat.seasonal, aes(x = date, y = value, group = name, col = name)) +
 Together, the `trend` and `seasonal` components are a expectation of the PM~2.5~ concentration given the long-term and seasonal variations. The `remainder` then is the natural fluctuations around the expected value.
 
 
-```{r method-stl-cumulative, dev = 'png', message = F, fig.height = 4, fig.cap = "Cumulative addition of STL components to total PM2.5 concentration for pixel in Darwin (NT) for the year 2015."}
+```{r method-stl-cumulative, cache = T, dev = 'png', message = F, fig.height = 4, fig.cap = "Cumulative addition of STL components to total PM2.5 concentration for pixel in Darwin (NT) for the year 2015."}
 library(gganimate)
 plt_animate <- 
   ggplot(dat.stl_cumul, 
