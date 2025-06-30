@@ -21,7 +21,12 @@ Due to the extraordinary bushfire events and resulting PM~2.5~ levels in January
 
 ## Flags {#methodology-flags}
 
-For each pixel, a series of binary flags to aid identification of PM~2.5~ source were extracted from a varity of satellite data and weather grids.
+For each pixel, a series of binary flags to aid identification of PM~2.5~ source were extracted from a variety of satellite data and weather grids. Additionally two statistical threshold-based flags were calculated from the estimated PM~2.5~ and STL `remainder` component as an indication of significantly high levels of PM~2.5~.
 
+Dust data was drawn from two sources - CAMS satellite aerosol optical depth (AOD) and MERRA-2 PM2.5 dust - and pixel flagged if it exceeded a specific percentile threshold calculated over the entire time period (2001-2020) and all pixels. In a similar manner, the temperature flags (`whs_[##]degreeC`) were set to indicate where the pixel had a mean daily temperature below a specific temperature.
 
-A series of binary flags (relating to dust, temperature and active fires) were extracted from satellite data and weather grids. 
+Pixels were flagged for active fires (from satellite-derived data) for a given buffer size (ranging from 10km to 500km) if an active fire was present within the buffer of a pixel.
+
+Statistical thresholds were calculated on the total PM~2.5~ concentration by determining the 95^th^ percentile of PM~2.5~ over the study time period for each pixel (ensuring each pixel location is compared only with itself). The pixel was then flagged for each day where PM~2.5~ exceeded this threshold.
+
+A second statistical threshold was derived by trimming the `remainder` component to the 99^th^ percentile then calculating the standard deviation (SD) for each pixel. The pixel was then flagged if the `remainder` exceeded 2SD (of the trimmed `remainder`).

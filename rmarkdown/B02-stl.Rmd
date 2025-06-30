@@ -1,4 +1,4 @@
-# STL decomposition
+# STL decomposition {#stl-decomposition}
 
 The three components (Fig. \@ref(fig:method-stl-breakdown)) capture different aspects of the total PM~2.5~ timeseries. Long-term variation (over years) is found in `trend`, which in the case shown, is a slight decrease over 2015. Year-to-year changes in PM~2.5~ are typically low (less than 1µg/m^3^) and thus `trend` does not vary significantly and instead increases or decreases over the span of years. The `seasonal` component, in contrast, represents regular fluctuations in the timeseries. Here the fluctuations tend to depend on the time of year and the seasonal component is similar (though not exactly the same) for each year. In this example, the higher `seasonal` PM~2.5~ during May to October is a reflection of the regular dry season bushfires in the Northern Territory.
 
