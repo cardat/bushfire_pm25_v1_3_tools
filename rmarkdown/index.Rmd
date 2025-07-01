@@ -18,8 +18,8 @@ place_name <- "Lithgow (NSW)"
 place_feature <- "This location was affected by the nearby State Mine bushfire" # for caption
 crds <- data.frame(lon = 150.162346, lat = -33.488082)
 
-caption_raster <- sprintf('Raster map of total PM2.5 (µg/m3) for Australia on %s. %s is marked with a white diamond, corresponding to the location of the STL decomposition shown below.', dd, place_name)
-caption_stl <- sprintf('STL decomposition of total PM2.5 (µg/m3) into trend, seasonal and remainder components for pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
+caption_raster <- sprintf('Raster map of total PM~2.5~ (µg/m^3^) for Australia on %s. %s is marked with a red diamond, corresponding to the location of the STL decomposition shown below.', dd, place_name)
+caption_stl <- sprintf('STL decomposition of total PM~2.5~ (µg/m^3^) into trend, seasonal and remainder components for the pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
 
 infile <- file.path(datadir,
                     sprintf("Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", 
@@ -32,7 +32,7 @@ v_crds <- project(v_crds.wgs84, "epsg:3577")
 
 # Overview
 
-The Bushfire-specific PM~2.5~ V1.3 datasets are a daily raster time-series of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). It additionally includes a decomposition of the estimated PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures. This dataset accompanies the following publication:
+The Bushfire-specific PM~2.5~ V1.3 datasets are a set of daily time-series rasters of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). These additionally include a seasonal-trend decomposition using LOESS (STL) of the total PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures. The original dataset accompanies the following publication:
 
 > Borchers-Arriagada, N., Morgan, G.G., Buskirk, J.V., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
 
@@ -46,10 +46,10 @@ r_plt.focus <- crop(r_plt, focus_bounds)
 
 
 plot(r_plt.focus, 
-     plg=list(title = substitute("PM"[2.5]*" (µg/m"^3*")")))
-points(v_crds.wgs84, cex = 1.5, col = "red", pch = 18)
-sbar(100, type = "bar", below = "km", xy = "topright")
-inset(r_plt, box=ext(focus_bounds), scale=.4, loc="bottomright", background="light yellow", pbox=list(lwd=1, lty=1, col="red"))
+     plg=list(title = expression("PM"[2.5]*" (µg/m"^3*")")))
+points(v_crds.wgs84, cex = 1, col = "red", pch = 18)
+sbar(100, type = "bar", xy = c(153.9, -29.6), below = "km")
+inset(r_plt, box=ext(focus_bounds), scale=.4, loc="bottomright", background="grey90", pbox=list(lwd=1, lty=1, col="red"))
 ```
 
 ```{r img-stl, fig.cap=caption_stl, cache = TRUE}
@@ -79,15 +79,15 @@ ggplot(dat.index, aes(x = date, y = value)) +
 
 ```
 
-Read more about the dataset and its development in the [Overview](#overview) and [Methodology](#methodology).
+Read more about the dataset and its development in the [Metadata](#metadata) and [Methodology](#methodology).
 
-The dataset is available on request for research purposes. It is managed by the [Clean Air Research Data and Analysis Technology][cardat-home] (CARDAT) team of the [Centre for Safe Air][csa-home] (CSA). Please **read the full [data sharing policy](#dataset-licencing) and submit an access request through the [CARDAT Data Access Form][cardat-form]**.
+The dataset is available on request for research purposes. It is managed by the [Clean Air Research Data and Analysis Technology][cardat-home] (CARDAT) team of the [Centre for Safe Air][csa-home] (CSA). Please read the full [data sharing policy](#dataset-licencing) and submit an access request through the [CARDAT Data Access Form][cardat-form].
 
 ## Acknowledgements {-}
 
-The development of the **Bushfire-specific PM~2.5~ 2001-2020 V1.3** dataset was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
+The development of the *Bushfire-specific PM~2.5~ 2001-2020 V1.3* dataset was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
 
-We acknowledge the Sydney Informatics Hub and the University of Sydney’s high performance computing cluster Artemis for providing the high performance computing resources on which the **Bushfire-specific PM~2.5~ V1.3** datasets were generated.
+We acknowledge the Sydney Informatics Hub and the University of Sydney’s high performance computing cluster Artemis for providing the high performance computing resources on which the *Bushfire-specific PM~2.5~ V1.3* datasets were generated.
  
 We would also like to thank Dana Jordan for her assistance during the QA/QC process.
 

@@ -1,6 +1,6 @@
 # Flags
 
-The absolute PM~2.5~ and STL decomposition `remainder` (see [STL decomposition]) can be used to indicate unusually high PM~2.5~ days (e.g. days with a remainder > 2SD of remainder). However, this does not differentiate between sources, of which dust and wood heater smoke are major contributors in Australia. The calculated flags may be used to aid in differentiating days of high PM~2.5~ due to bushfires and those due to other sources.
+The absolute PM~2.5~ and STL decomposition `remainder` (see [STL decomposition](#stl-decomposition)) may be used to determine when PM~2.5~ concentrations are higher than is typical. However, this does not differentiate between sources, of which bushfires, dust and wood heater smoke are major contributors in Australia. The calculated flags may be used to aid in differentiating days of high PM~2.5~ due to bushfires and those due to other sources.
 
 Some combination of the flags can provide an indication of whether that particular day's PM~2.5~ is likely due to firesmoke. There is no definitive rule on which combination should be used. Rather, the choice should be guided by the study question and scope. The user should also consider using any additional data available in their study region to compare with or validate the predictions of bushfire-specific smoke.
 
@@ -10,7 +10,7 @@ Some combination of the flags can provide an indication of whether that particul
 
 This flag indicates the presence of an active fire within a given distance of the pixel (10, 25, 50, 100 or 500km). Note the active fires are derived from satellite data and therefore may be less reliable under less ideal conditions such as cloud-covered days. 
 
-The presence of active fires in close proximity is not a definitive indication that PM~2.5~ is primarily due to fire smoke as the flag does not differentiate intensity nor wind direction. It is possible for a pixel to have low bushfire-specific PM~2.5~ even with an active fire nearby if the wind direction directs smoke away from that location, or if the active fire is of low intensity.
+The presence of active fires in close proximity is not a definitive indication that PM~2.5~ is primarily due to fire smoke as the flag does not indicate intensity nor account for wind direction. It is possible for a pixel to have low bushfire-specific PM~2.5~ even with an active fire nearby if the wind direction directs smoke away from that location, or if the active fire is of low intensity.
 
 **Dust**
 
@@ -18,7 +18,7 @@ The dust flags from both MERRA-2 and CAMS satellite-derived datasets indicate hi
 
 **Temperature**
 
-Temperature flags are set to show days on which the mean daily temperature is below a certain threshold (12°C, 15°C and 18°C). This is a proxy for likely wood heater smoke as heater usage is more probable in colder weather. Wood heater usage is also dependent on other factors such as housing structure and density, climatic conditions and socioeconomic status. These temperature flags therefore vary in applicability across Australia.
+Temperature flags are set to show days on which the mean daily temperature is below a certain threshold (12°C, 15°C and 18°C). This is a proxy for likely wood heater smoke as heater usage is more probable in colder weather. Wood heater usage is also dependent on other factors such as housing structure and density, climatic conditions and socioeconomic status.
 
 **Statistical thresholds**
 
@@ -67,7 +67,7 @@ plot(dat.flags_exmpl[, .(date, pm25_pred)], type = "l", col = "grey70",
      ylim = range(dat.flags_exmpl$pm25_pred) + c(0, 4))
 title(main = "(a)", adj = 0)
 abline(a = thresholds_exmpl$pm25_p95, b = 0, col = "red", lty = 3)
-points(dat.flags_exmpl[pm25_pred > flags_exmpl.p95$pm25_pred, .(date, pm25_pred)], col = "red", pch = 16)
+points(dat.flags_exmpl[pm25_pred > flags_exmpl.p95$pm25_pred, .(date, pm25_pred)], col = "red", cex = 0.6, pch = 16)
 legend(
   "topright",
   legend = c(
@@ -91,7 +91,7 @@ lines(dat.flags_exmpl[, .(`trend+seasonal` = trend+seasonal), by = .(date)],
 lines(dat.flags_exmpl[, .(date, threshold = trend+seasonal+2*thresholds_exmpl$rem_sd)], 
       col = "red", lty = 3)
 points(dat.flags_exmpl[remainder > thresholds_exmpl$rem_sd*2, .(date, pm25_pred)], 
-       col = "red", pch = 16)
+       col = "red", cex = 0.6, pch = 16)
 legend(
   "topright",
   legend = c(
@@ -109,6 +109,6 @@ legend(
 ```
 In contrast, the statistical flag `trimmed_smoke_2SD_v1_3` indicates where the remainder has exceeded 2 standard deviations of the remainder at that location over the study period. Remembering that the STL components sum to the total PM~2.5~ (see Figure \@ref(fig:method-stl-breakdown) and \@ref(fig:method-stl-cumulative) in the [previous section](#stl-decomposition)), the remainder in Figure \@ref(fig:flags-statistical-example) **(b)** is the difference between total PM~2.5~, and the `seasonal` and `trend` components combined (grey and blue lines, respectively). The threshold for `trimmed_smoke_2SD_v1_3` (`remainder` > 2SD of the `remainder`) is therefore equivalent to the total PM~2.5~ being greater than the `seasonal` + `trend` + 2SD of the `remainder`. 
 
-This takes into account the seasonal fluctuations of that location and is intended to flag a pixel when the total PM~2.5~ is unusually high *given the temporal patterns of that location*. 
+This takes into account the seasonal fluctuations of that location and is intended to flag a pixel when the total PM~2.5~ is unusually high given the temporal patterns of that location. 
 
-For the example in Figure \@ref(fig:flags-statistical-example), slightly higher PM~2.5~ levels (`seasonal` + `trend`) are expected in the summer months whereas levels in colder months (June to September) remain low. Note one day in summer (January) is flagged by `smoke_p95_v1_3` as it is unusually high *compared to the long-term average*. However, this day is **not** flagged by `trimmed_smoke_2SD_v1_3` since the concentration is not high *considering the levels typically experienced at this point in the year*. The reverse situation can be observed in July. Multiple days are flagged by `trimmed_smoke_2SD_v1_3` but not by `smoke_p95_v1_3` as the PM~2.5~ concentration is lower than long-term average but higher than typical of winter days in this location.
+For the example in Figure \@ref(fig:flags-statistical-example), slightly higher PM~2.5~ levels (`seasonal` + `trend`) are expected in the summer months whereas levels in colder months (June to September) remain low. Note one day in summer (January) is flagged by `smoke_p95_v1_3` as it is unusually high *compared to the long-term average*. However, this day is **not** flagged by `trimmed_smoke_2SD_v1_3` since the concentration is not high *considering the levels typically experienced at this point in the year*. The reverse situation can be observed in July. Multiple days are flagged by `trimmed_smoke_2SD_v1_3` but not by `smoke_p95_v1_3` as the PM~2.5~ concentration is lower than long-term average but higher than typical of winter days at this location.

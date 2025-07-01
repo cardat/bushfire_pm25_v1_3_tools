@@ -1,53 +1,51 @@
 # (PART) Dataset details {-}
 
-# Metadata
+# Metadata {#metadata}
 
-These datasets consists of daily PM2.5 predictions across Australia using the revised random forest model of the Bushfire Smoke project V1.3. It corrects the input predictors of and supersedes V1.2.
+These datasets consists of daily PM~2.5~ predictions across Australia using the revised random forest model of the Bushfire Smoke project V1.3. It corrects the input predictors of and supersedes V1.2.
 
-Data is provided in NetCDF format in the `data_derived/` directory of each dataset folder.  Spatial resolution and extent of the raster is 5km by 5km across Australia (excluding offshore territories) (EPSG:3577). Variables include:
+Data is provided in NetCDF format in the `data_derived/` directory of each dataset folder.  Spatial resolution and extent of the raster is a 5km grid across Australia (mainland and Tasmania) in GDA94 / Australian Albers projection (EPSG:3577). Variables consist of:
 
-- daily total predicted PM~2.5~ (µg/m^3^) from the random forest model
+- daily estimated total PM~2.5~ (µg/m^3^) from the random forest model
 - STL decomposition components of total PM~2.5~
-- Daily firesmoke flags for indication of bushfire events
+- Daily firesmoke flags for indication of bushfire events (for the original 2001-2020 dataset only)
 
-A brief description of the methodology can be found in the section [Methodology](#methodology). Background and detail of the development of this data has been published in:
-
-> Borchers-Arriagada, N., Morgan, G.G., Van Buskirk, J., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
+Further description of the methodology can be found in the section [Methodology](#methodology). 
 
 ## Component datasets
 
 ### Bushfire_specific_PM25_Aus_2001_2020_v1_3
 
-This is the original dataset as described in the published paper and covers days from 2001-01-01 to 2020-06-30. The random forest model was trained on observational daily data from this entire time period, then used to predict over the 5km grid. The total PM~2.5~ predicted was then broken down into trend, seasonal and remainder components for each pixel through STL decomposition over 2001-2019 (see [Methodology - STL decomposition](#methodology-stl)), excluding 2020 due to the exceptional bushfire events of 2019-2020. STL components for 2020 were filled by assuming identical seasonal and trend components for 2019 and 2020, calculating the 2020 remainder component as the difference between total PM~2.5~ (2020) and seasonal + trend (2019).
+This is the original dataset as described in the published paper and covers days from 2001-01-01 to 2020-06-30. The random forest model was trained on observed daily data from regulatory monitors then used to predict over the 5km grid. The total PM~2.5~ predictions were then broken down into trend, seasonal and remainder components for each pixel through STL decomposition over 2001-2019 (see [Methodology - STL decomposition](#methodology-stl)), excluding 2020 due to the exceptional bushfire events of 2019-2020. STL components for 2020 were filled by assuming identical daily seasonal and trend components for 2019 and 2020, calculating the 2020 remainder component as the difference between total PM~2.5~ (2020) and seasonal + trend (2019).
 
-Statistical thresholds for extreme PM~2.5~ were calculated for each pixel - both the 95th percentile of predicted PM~2.5~ and standard deviation of the trimmed (to 99th percentile) remainder.
+Statistical thresholds for extreme PM~2.5~ were calculated for each pixel&mdash;both the 95^th^ percentile of predicted PM~2.5~ and standard deviation of the trimmed (to 99^th^ percentile) remainder.
 
-Binary flags for identification of bushfire events were then produced from the statistical thresholds and other external data sources (see Table \@ref(tab:data-dictionary-flags) for full listing of flags): 
+Binary flags for identification of bushfire events were then produced from the statistical thresholds and other external data sources (see Table \@ref(tab:data-dictionary-flags) for full listing of flags):
 
-* active fires from MODIS satellite
-* dust from MERRA-2 satellites
-* dust from CAMS satellite
-* temperature from BoM AWAP grids
+- active fire MODIS product
+- PM~2.5~ dust from MERRA-2 reanalysis
+- dust AOD from CAMS reanalysis
+- temperature from Bureau of Meteorology's AWAP grids
 
-Daily predicted PM~2.5~, STL components and binary flags are stored as a NetCDF file by year in the `data_derived/` directory. The calculated statistical thresholds are stored in `data_derived_raw_flags/`, also as NetCDFs. Note each threshold is a single layer (no time component) as both have been calculated over all years.
+Daily predicted PM~2.5~, STL components and binary flags are stored as a NetCDF file by year in the `data_derived/` directory. The calculated statistical thresholds are stored in `data_derived_raw_flags/`, also as NetCDFs. Note each threshold is a single layer (no time component) as both have been calculated across all years 2001-2020.
 
 ### Bushfire_specific_PM25_Aus_2020_2023_v1_3
 
 The 2020-2023 update uses the original random model (trained on 2001-2020 data) to predict daily PM~2.5~ from 2020-01-01 to 2023-12-31. STL decomposition was performed with only 2021-2023 data, omitting 2020 data as in the original dataset. 2020 STL components were infilled by assuming identical trend and seasonal components as 2021, and taking the difference between total PM~2.5~ (2020) and seasonal + trend (2021) to be the remainder component.
 
-Consequently the STL components for the overlapping period of the two datasets (2020-01-01 to 2020-06-30) are not identical There may also be discontinuity of STL components when considering time periods extending over both datasets.
+Consequently the STL components for the overlapping period of the two datasets (2020-01-01 to 2020-06-30) are not identical. There may also be visible discontinuity of STL components between the original 2001-2020 and 2020-2023 update.
 
 Both predicted PM~2.5~ and STL components are available in the `data_derived/` folder as NetCDF files by year. Statistical thresholds and other flags were not produced.
 
 ## Data dictionary
 
 ```{r data-dictionary, tab.cap='Description of non-firesmoke flag variables available for both 2001-2020 and 2020-2023 datasets.'}
-ls_data_dict.pm25_stl <- list(c("pm25_pred", "Total predicted PM2.5 (µg/m3)"), 
-                           c("seasonal", "Seasonal component of PM2.5 STL decomposition (µg/m3)"),
-                           c("trend", "Trend component of PM2.5 STL decomposition (µg/m3)"),
-                           c("remainder", "Remainder component of PM2.5 STL decomposition (µg/m3)"),
+ls_data_dict.pm25_stl <- list(c("pm25_pred", "Total predicted PM~2.5~ (µg/m^3^)"), 
+                           c("seasonal", "Seasonal component of PM~2.5~ STL decomposition (µg/m^3^)"),
+                           c("trend", "Trend component of PM~2.5~ STL decomposition (µg/m^3^)"),
+                           c("remainder", "Remainder component of PM~2.5~ STL decomposition (µg/m^3^)"),
                            c("extrapolated", "Flag indicating if raster value for flag variables were spatially extrapolated (1 if True, 0 if False)"),
-                           c("prediction_out_range", "Flag indicating if pm25_pred value was beyond the range of PM2.5 used to train model (1 if True, 0 if False)"),
+                           c("prediction_out_range", "Flag indicating if pm25_pred value was beyond the range of PM~2.5~ used to train model (1 if True, 0 if False)"),
                            c("predictor_out_range", "Number of predictors which had a value beyond the range of that used to train the model")
 )
 ls_data_dict.pm25_stl <- transpose(ls_data_dict.pm25_stl)
@@ -61,22 +59,22 @@ knitr::kable(data_dict.pm25_stl)
 
 ```{r data-dictionary-flags, tab.cap='Description of firesmoke flags for V1.3, produced for 2001-2020. Timepoints are daily from 2001 to 2020.'}
 ls_data_dict.flags <- list(
-  c("dust_cams_p50", "1 if CAMS AOD dust for pixel-timepoint > 50th percentile of CAMS AOD dust (all pixels and timepoints), otherwise 0"),
-  c("dust_cams_p75", "1 if CAMS AOD dust for pixel-timepoint > 75th percentile of CAMS AOD dust (all pixels and timepoints), otherwise 0"),
-  c("dust_cams_p95", "1 if CAMS AOD dust for pixel-timepoint > 95th percentile of CAMS AOD dust (all pixels and timepoints), otherwise 0"),
-  c("dust_merra_2_p50", "1 if MERRA-2 PM2.5 dust for pixel-timepoint > 50th percentile of MERRA-2 PM2.5 dust (all pixels and timepoints), otherwise 0"),
-  c("dust_merra_2_p75", "1 if MERRA-2 PM2.5 dust for pixel-timepoint > 75th percentile of MERRA-2 PM2.5 dust (all pixels and timepoints), otherwise 0"),
-  c("dust_merra_2_p95", "1 if MERRA-2 PM2.5 dust for pixel-timepoint > 95th percentile of MERRA-2 PM2.5 dust (all pixels and timepoints), otherwise 0"),
-  c("smoke_p95_v1_3", "1 if daily predicted PM2.5 for pixel-timepoint > 95th percentile of daily PM2.5 of pixel (all timepoints), otherwise 0"),
-  c("trimmed_smoke_2SD_v1_3", "1 if remainder for pixel-timepoint > 2 standard deviations (SD) of the trimmed remainder (excluded values above 99th percentile) of pixel (all timepoints), otherwise 0"),
+  c("dust_cams_p50", "1 if CAMS AOD dust for pixel-timepoint > 50^th^ percentile of CAMS AOD dust (all pixels and timepoints), otherwise 0"),
+  c("dust_cams_p75", "1 if CAMS AOD dust for pixel-timepoint > 75^th^ percentile of CAMS AOD dust (all pixels and timepoints), otherwise 0"),
+  c("dust_cams_p95", "1 if CAMS AOD dust for pixel-timepoint > 95^th^ percentile of CAMS AOD dust (all pixels and timepoints), otherwise 0"),
+  c("dust_merra_2_p50", "1 if MERRA-2 PM2.5 dust for pixel-timepoint > 50^th^ percentile of MERRA-2 PM2.5 dust (all pixels and timepoints), otherwise 0"),
+  c("dust_merra_2_p75", "1 if MERRA-2 PM2.5 dust for pixel-timepoint > 75^th^ percentile of MERRA-2 PM2.5 dust (all pixels and timepoints), otherwise 0"),
+  c("dust_merra_2_p95", "1 if MERRA-2 PM2.5 dust for pixel-timepoint > 95^th^ percentile of MERRA-2 PM2.5 dust (all pixels and timepoints), otherwise 0"),
+  c("smoke_p95_v1_3", "1 if daily predicted PM2.5 for pixel-timepoint > 95^th^ percentile of daily PM2.5 of pixel (all timepoints), otherwise 0"),
+  c("trimmed_smoke_2SD_v1_3", "1 if remainder for pixel-timepoint > 2 standard deviations (SD) of the trimmed remainder (excluded values above 99^th^ percentile) of pixel (all timepoints), otherwise 0"),
   c("whs_18degreeC", "1 if mean daily temperature for pixel-timepoint < 18°C, otherwise 0"),
   c("whs_15degreeC", "1 if mean daily temperature for pixel-timepoint < 15°C, otherwise 0"),
   c("whs_12degreeC", "1 if mean daily temperature for pixel-timepoint < 12°C, otherwise 0"),
-  c("active_fires_10000", "1 if active fires present for pixel-timepoint within 10 km buffer, otherwise 0"),
-  c("active_fires_25000", "1 if active fires present for pixel-timepoint within 25 km buffer, otherwise 0"),
-  c("active_fires_50000", "1 if active fires present for pixel-timepoint within 50 km buffer, otherwise 0"),
-  c("active_fires_100000", "1 if active fires present for pixel-timepoint within 100 km buffer, otherwise 0"),
-  c("active_fires_500000", "1 if active fires present for pixel-timepoint within 500 km buffer, otherwise 0"))
+  c("active_fires_10000", "1 if active fires present for pixel-timepoint within 10km buffer, otherwise 0"),
+  c("active_fires_25000", "1 if active fires present for pixel-timepoint within 25km buffer, otherwise 0"),
+  c("active_fires_50000", "1 if active fires present for pixel-timepoint within 50km buffer, otherwise 0"),
+  c("active_fires_100000", "1 if active fires present for pixel-timepoint within 100km buffer, otherwise 0"),
+  c("active_fires_500000", "1 if active fires present for pixel-timepoint within 500km buffer, otherwise 0"))
 
 ls_data_dict.flags <- transpose(ls_data_dict.flags)
 names(ls_data_dict.flags) <- c("Flag", "Description")
@@ -86,7 +84,3 @@ data_dict.flags <- as.data.table(ls_data_dict.flags)
 knitr::kable(data_dict.flags)
 
 ```
-
-Further description of the STL components in Table \@ref(tab:data-dictionary) and flags in Table \@ref(tab:data-dictionary-flags) is given in section [Methodology](#methodology). 
-
-

@@ -1,6 +1,6 @@
 # STL decomposition {#stl-decomposition}
 
-The three components (Fig. \@ref(fig:method-stl-breakdown)) capture different aspects of the total PM~2.5~ timeseries. Long-term variation (over years) is found in `trend`, which in the case shown, is a slight decrease over 2015. Year-to-year changes in PM~2.5~ are typically low (less than 1µg/m^3^) and thus `trend` does not vary significantly and instead increases or decreases over the span of years. The `seasonal` component, in contrast, represents regular fluctuations in the timeseries. Here the fluctuations tend to depend on the time of year and the seasonal component is similar (though not exactly the same) for each year. In this example, the higher `seasonal` PM~2.5~ during May to October is a reflection of the regular dry season bushfires in the Northern Territory.
+The three components (Fig. \@ref(fig:method-stl-breakdown)) capture different aspects of the total PM~2.5~ timeseries. Long-term variation (over years) is found in `trend`, which in the case shown, is a slight decrease over 2015. Year-to-year changes in PM~2.5~ are typically low (less than 1µg/m^3^) and thus `trend` does not typically vary significantly. The `seasonal` component, in contrast, represents regular fluctuations in the timeseries. Here the fluctuations tend to depend on the time of year and the seasonal component is similar (though not exactly the same) for each year. In this example, the higher `seasonal` PM~2.5~ during May to October is a reflection of the regular dry season bushfires in the Northern Territory.
 
 ```{r method-stl-breakdown, cache=T, fig.cap = "STL components and total PM2.5 concentration for a pixel in Darwin (NT) for the year 2015."}
 infile <- file.path(datadir,
@@ -43,7 +43,7 @@ plt.disagg <- ggplot(dat.stl[variable != "PM2.5"], aes(x = date, y = value, grou
 plt.disagg
 ```
 
-The `seasonal` pattern can vary greatly from one location to another, depending on climate and the surrounding environment. While in Darwin, bushfires are expected in the dry season (winter months), south-eastern Australia typically experiences bushfires in the summer months and would see peaks of `seasonal` PM~2.5~ through December to February. High `seasonal` PM~2.5~ is also not necessarily indicative of bushfires. For instance, Launceston (Tasmania) experiences high `seasonal` PM~2.5~ through winter months, not due to bushfires but rather domestic wood heater smoke.
+The `seasonal` pattern can vary greatly from one location to another, depending on climate and the surrounding environment. While in Darwin, bushfires are expected in the dry season (winter months), south-eastern Australia typically experiences bushfires in the summer months and would see peaks of `seasonal` PM~2.5~ through December to February, as in Campbelltown (NSW). High `seasonal` PM~2.5~ is also not necessarily indicative of bushfires. For instance, Launceston (Tasmania) experiences high `seasonal` PM~2.5~ through winter months, not due to bushfires but rather domestic wood heater smoke (Fig. \@ref(fig:method-stl-seasonal-comparison)).
 
 ```{r method-stl-seasonal-comparison, cache=T, fig.cap = "Comparison of seasonal components for locations of contrasting environment and climate around Australia - Darwin (NT), Campbelltown (NSW) and Launceston (Tasmania)."}
 v_loc <- vect(rbind(data.frame(name = "Darwin (NT)", lon = 130.944847, lat = -12.415435),
@@ -71,7 +71,7 @@ ggplot(dat.seasonal, aes(x = date, y = value, group = name, col = name)) +
 
 ```
 
-Together, the `trend` and `seasonal` components are a expectation of the PM~2.5~ concentration given the long-term and seasonal variations. The `remainder` then is the natural fluctuations around the expected value.
+Together, the `trend` and `seasonal` components are a expectation of the PM~2.5~ concentration given the long-term and seasonal variations. The `remainder` is therefore represents the fluctuations around the expected value.
 
 
 ```{r method-stl-cumulative, cache = T, dev = 'png', message = F, fig.height = 4, fig.cap = "Cumulative addition of STL components to total PM2.5 concentration for pixel in Darwin (NT) for the year 2015."}
@@ -90,16 +90,16 @@ plt_animate <-
 animate(plt_animate)
 ```
 
-The three STL components sum to the total PM~2.5~, illustrated in Figure \@ref(fig:method-stl-cumulative). This serves also to demonstrate conceptually the different aspects captured by the STL decomposition. Note that both the `seasonal` and `remainder` components are often negative - the `seasonal` component captures regular variations around the long-term `trend` and the `remainder` component the fluctuations around 'expectation', `trend + seasonal`.
+The three STL components sum to the total PM~2.5~, illustrated in Figure \@ref(fig:method-stl-cumulative). Note that both the `seasonal` and `remainder` components are often negative - the `seasonal` component captures regular variations around the long-term `trend` and the `remainder` component the fluctuations around 'expectation', `trend + seasonal`.
 
 ## Quantification of bushfire-specific PM~2.5~
 
-It is important to note that the STL alone does not indicate the presence of bushfire smoke-related PM~2.5~. Instead, additional information such as the flags are required to classify days as being bushfire-affected or not.
+It is important to note that the STL alone does not indicate the presence of bushfire smoke-related PM~2.5~. Additional information such as the flags are required to classify days as being bushfire-affected or not.
 
 The STL decomposition does allow a degree of quantification of bushfire-specific PM~2.5~ once those bushfire-affected days are identified. Different approaches are possible and the best option will depend on the study question. 
 
-Taking, for instance, the Darwin example above (Fig. \@ref(fig:method-stl-breakdown)), the `seasonal` component includes the expected regular bushfire-related PM~2.5~ during the dry season. Increased `remainder` indicates a worse-than-usual bushfire-affected day (higher PM~2.5~) and conversely decreased `remainder` shows this day was less affected or not affected at all.
+Taking, for instance, the Darwin example above (Fig. \@ref(fig:method-stl-breakdown)), the `seasonal` component includes the expected regular bushfire-related PM~2.5~ during the dry season. Increased `remainder` indicates a worse-than-usual bushfire-affected day (higher PM~2.5~) and conversely decreased `remainder` shows this day was less affected than usual or not affected at all.
 
 Thus the difference between `remainder` and `seasonal + trend` (expectation) for a bushfire-affected day (assuming bushfires to be the dominant source of PM~2.5~) is only a partial representation of the full PM~2.5~ due to bushfires. This may be a reasonable measure if the study is concerned with exceptionally poor air quality due to bushfire events of greater than usual severity.
 
-An alternative approach is to identify a bushfire-affected day then assume all PM~2.5~ above some background level can be attributed to bushfire smoke. This is a more inclusive approach but could overestimate if there are other significant sources of PM~2.5~ on those days. Additionally, what is regarded as background is not clearly defined (e.g. could be the `trend` value, an arbitrary set value, a statistical threshold value such as the annual mean). Again, this should be considered respect to the study question.
+An alternative approach is to identify a bushfire-affected day then assume all PM~2.5~ above some background level to be attributable to bushfire smoke. This is a more inclusive approach but could overestimate if there are other significant sources of PM~2.5~ on those days. Furthermore, what is regarded as background is not clearly defined (e.g. could be the `trend` value, an arbitrary set value, or a statistical threshold value such as the annual mean). Again, this should be considered with respect to the study question.

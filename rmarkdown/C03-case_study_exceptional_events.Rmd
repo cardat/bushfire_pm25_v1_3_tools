@@ -1,0 +1,5 @@
+# Exceptional PM~2.5~ events
+
+HIA Study on mortality and exceptional PM~2.5~ events.
+
+[Mortality burden attributable to exceptional PM~2.5~ air pollution events in Australian cities: A health impact assessment][paper-exceptional-events]

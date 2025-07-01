@@ -10,16 +10,17 @@ Due to unavailability of landscape fire data before November 2020 (the basis of 
 
 ## Negative predicted PM~2.5~ values
 
-The predicted PM~2.5~ is occasionally negative. This could be a consequence of the training data, which allowed negative values in the response variables. It may also be a result of the application of the model to environments dissimilar to the locations in the training data. Most observational monitors are located in populated areas and close to human infrastructure, and therefore the model may be less accurate in rural or unpopulated regions.
+PM~2.5~ predictions are occasionally negative. This could be a consequence of the training data, which allowed negative values in the response variable. It may also be a result of the application of the model to environments dissimilar to the locations in the training data. Most regulatory monitors are located in urban areas and/or close to human infrastructure, and therefore the model may be less accurate in rural or unpopulated regions.
 
 The `prediction_out_range` variable indicates where the predicted PM~2.5~ fall outside the range of the response variable values provided to train the model. There are a variety of methods to handle negative values:
 
-- consider using `prediction_out_range` and/or a conditional on the PM~2.5~ value to identify improbable values.
-- if improbable/implausible, consider removing these values (and conducting an interpolation to fill if needed) or truncating to some chosen threshold
+- consider using `prediction_out_range` or a conditional on the PM~2.5~ value to identify improbable values
+- consider removing negative or improbable values (interpolating to fill missing values if needed) or truncating to some chosen threshold
+    + threshold may be absolute (specific value) or relative (e.g. percentile)
 
 ## Infilled data
 
-Raster cells covering coastal areas were not well-covered by PM~2.5~ predictions as a consequence of the predictor extraction process. For predictors in raster format, values were extracted to the prediction grid through point extraction - for each grid cell, the value of the predictor raster at the centre of that cell. This returned NA if the centre of the cell lay over a water body and was not covered by the predictor raster. 
+Raster cells along water bodies were not well-covered by some predictors and consequently the model could not estimate a PM~2.5~ concentration at those points. This was a result of the predictor extraction process, where data was extracted by point extraction (using the prediction grid cell centroid) from the source predictor raster. For some predictors, the source raster was missing over water bodies and thus would return `NA` if the prediction grid cell centroid lay slightly offshore (though the cell might otherwise include significant land area).
 
 As much of Australia's population is concentrated along coastal regions, the dataset was extrapolated to ensure all missing coastal pixels were filled. Extrapolation was performed for missing coastal pixels by: 
 
@@ -27,13 +28,12 @@ As much of Australia's population is concentrated along coastal regions, the dat
 - calculating a focal window (size 3) mean on the PM~2.5~ prediction and decomposition components (i.e. mean of all non-NA adjacent cells)
 
 
-Additionally, flags were originally extracted for the superseded V1.2 grid and were remapped to the V1.3 grid (rather than performing a full extraction for the V1.3 grid). As the V1.2 grid did not entirely cover the V1.3 grid, flags were extrapolated by taking a 15km buffer on unmapped grid points and setting the flag to 1 if any V1.2 grid cell within the buffer was flagged 1.
+Additionally, flags were originally extracted for the superseded V1.2 grid and were remapped to the V1.3 grid, rather than performing a full extraction for the V1.3 grid. As the V1.2 grid did not entirely cover the V1.3 grid, flags were extrapolated by taking a 15km buffer on unmapped grid points and setting the flag to 1 if any V1.2 grid cell within the buffer was flagged 1.
 
 ## Artefacts
 
-Predicted PM~2.5~ was produced on a grid of 5km resolution but may not vary smoothly across the entirety of the extent due to the limited resolution of input predictors.
-Although grid was predicted at 5km resolution, there is a noticeable grid pattern of roughly 55km resolution. This pattern matches that of MERRA-2 satellite raster grid resolution.
+PM~2.5~ was predicted on a grid of 5km resolution, however the predictions may not vary smoothly across the entirety of the extent due to the limited resolution of input predictors. This is sometimes noticeable in visualisations of the surface:
 
-Also visible are circular regions (particular in northern Australia) corresponding to the 100km radius buffers of the em_fire_dens_fireskm2_100000_daily predictor.
-
-There are also seemingly random small ‘patches’ in fixed positions across the daily predictions. The size and position of these patches correspond to populated regions and are related to the predictor pop_dens_10000.
+- grid pattern of roughly 55km width and height, matching the MERRA-2 satellite raster grid resolution
+- circular regions (particular in northern Australia) corresponding to the 100km radius buffers of the `em_fire_dens_fireskm2_100000_daily` predictor
+- seemingly random small ‘patches’ in fixed positions across daily predictions, corresponding to the predictor `pop_dens_10000`
