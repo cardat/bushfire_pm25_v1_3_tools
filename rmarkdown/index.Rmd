@@ -5,7 +5,8 @@ css: css/style.css
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE,
+                      fig.path = 'main_images/')
 library(lubridate)
 library(terra)
 library(data.table)
