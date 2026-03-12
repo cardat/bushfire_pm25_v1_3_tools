@@ -9,8 +9,8 @@ fig:flags-statistical-example
 overview
 metadata
 component-datasets
-bushfire_specific_pm25_aus_2001_2020_v1_3
-bushfire_specific_pm25_aus_2020_2023_v1_3
+total_and_bushfire_specific_pm25_aus_2001_2020_v1_3
+total_and_bushfire_specific_pm25_aus_2020_2023_v1_3
 data-dictionary
 dataset-licencing
 data-sharing-and-co-authorship-policy

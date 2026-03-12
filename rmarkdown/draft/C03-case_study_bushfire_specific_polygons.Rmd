@@ -1,0 +1,10 @@
+# Bushfire-specific PM~2.5~ (polygons)
+
+This approach, designed for polygonal study areas rather than point locations, used the following conditions to signal a probable firesmoke day:
+
+- dust_merra_2_p75 < 0.5, AND
+- dust_cams_p75 < 0.5, AND
+- whs_15degreeC < 0.5, AND
+- smoke_p95 = 1
+
+The first three conditions were calculated on the mean of the raster cells within the polygon. For the fourth condition, `smoke_p95` was set to `1` if the geometric mean of PM~2.5~ within the polygon was greater than the 95th percentile of means for that polygon, calculated over the study period (in that particular case from 2010-01-01 to 2019-06-30).

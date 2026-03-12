@@ -15,7 +15,7 @@ To read metadata from the NetCDF, use the `ncdf4` package.
 ```{r example-r-ncdf4, echo=T}
 library(ncdf4)
 # select file
-infile <- "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc"
+infile <- "Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc"
 
 ## read netCDF
 nc <- ncdf4::nc_open(infile)
@@ -37,7 +37,7 @@ The `terra` package can read and manipulate both raster data (as provided here) 
 ```{r example-r-terra, echo=T}
 library(terra)
 # select file
-infile <- "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc"
+infile <- "Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc"
 
 # Read NetCDF
 sdset <- sds(infile)

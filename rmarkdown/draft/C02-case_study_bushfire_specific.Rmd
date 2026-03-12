@@ -1,0 +1,6 @@
+# Bushfire-specific PM~2.5~ (points)
+
+This approach looks for exceptional daily variation in PM~2.5~ or for active fire in vicinity, using the conditionals:
+
+- trimmed_smoke_2SD_v1_3 > 0, AND
+- active_fires_50000 = 1

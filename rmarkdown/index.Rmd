@@ -1,5 +1,5 @@
 --- 
-title: "Bushfire-specific PM~2.5~ V1.3 data (Last edited on `r Sys.Date()`)"
+title: "Total and Bushfire-specific PM~2.5~ V1.3 data (Last edited on `r Sys.Date()`)"
 author: "Bushfire Smoke Exposures Team"
 css: css/style.css
 ---
@@ -23,7 +23,7 @@ caption_raster <- sprintf('Raster map of total PM~2.5~ (µg/m^3^) for Australia 
 caption_stl <- sprintf('STL decomposition of total PM~2.5~ (µg/m^3^) into trend, seasonal and remainder components for the pixel at %s. Dotted red line indicates the date %s, corresponding to the above raster map. %s. (Note the scale for y axis is not fixed.)', place_name, dd, place_feature)
 
 infile <- file.path(datadir,
-                    sprintf("Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", 
+                    sprintf("Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_%04i_compressed_20231130_7.nc", 
                             year(dd))
 )
 
@@ -33,7 +33,7 @@ v_crds <- project(v_crds.wgs84, "epsg:3577")
 
 # Overview
 
-The Bushfire-specific PM~2.5~ V1.3 datasets are a set of daily time-series rasters of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). These additionally include a seasonal-trend decomposition using LOESS (STL) of the total PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures. The original dataset accompanies the following publication:
+The Total and Bushfire-specific PM~2.5~ V1.3 datasets are a set of daily time-series rasters of estimated total PM~2.5~ concentration covering Australia (Fig. \@ref(fig:img-pm25)). These additionally include a seasonal-trend decomposition using LOESS (STL) of the total PM~2.5~ into seasonal, trend and remainder components (Figure \@ref(fig:img-stl)), as well as a series of binary flags. Both the decomposed PM~2.5~ components and flags may be used in identification and quantification of bushfire-related PM~2.5~ exposures. The original dataset accompanies the following publication:
 
 > Borchers-Arriagada, N., Morgan, G.G., Buskirk, J.V., Gopi, K., Yuen, C., Johnston, F.H., Guo, Y., Cope, M. and Hanigan, I.C. (2024) ‘Daily PM2.5 and Seasonal-Trend Decomposition to Identify Extreme Air Pollution Events from 2001 to 2020 for Continental Australia Using a Random Forest Model’, *Atmosphere*, *15*(1341). Available at: <https://doi.org/10.3390/atmos15111341>.
 
@@ -86,9 +86,9 @@ The dataset is available on request for research purposes. It is managed by the 
 
 ## Acknowledgements {-}
 
-The development of the *Bushfire-specific PM~2.5~ 2001-2020 V1.3* dataset was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
+The development of the *Total and Bushfire-specific PM~2.5~ 2001-2020 V1.3* dataset was funded by the [Australian Research Data Commons][ardc-home] (ARDC), as part of the [Bushfire Data Challenges - Assessing the impact of bushfire smoke on health project][ardc-project].
 
-We acknowledge the Sydney Informatics Hub and the University of Sydney’s high performance computing cluster Artemis for providing the high performance computing resources on which the *Bushfire-specific PM~2.5~ V1.3* datasets were generated.
+We acknowledge the Sydney Informatics Hub and the University of Sydney’s high performance computing cluster Artemis for providing the high performance computing resources on which the *Total and Bushfire-specific PM~2.5~ V1.3* datasets were generated.
  
 We would also like to thank Dana Jordan for her assistance during the QA/QC process.
 
@@ -96,8 +96,8 @@ We would also like to thank Dana Jordan for her assistance during the QA/QC proc
 <!-- Dataset pages -->
 [dset-2001-2020-doi]: https://doi.org/10.17605/OSF.IO/WQK4T 
 [dset-2020-2023-doi]: https://doi.org/10.17605/OSF.IO/47C6B
-[dset-2001-2020-metadata]: https://cardat.github.io/data_inventory/bushfire_smoke_pm_exposures.html#bushfire_specific_pm25_aus_2001_2020_v1_3
-[dset-2020-2023-metadata]: https://cardat.github.io/data_inventory/bushfire_smoke_pm_exposures.html#bushfire_specific_pm25_aus_2020_2023_v1_3
+[dset-2001-2020-metadata]: https://cardat.github.io/data_inventory/bushfire_smoke_pm_exposures.html#total_and_bushfire_specific_pm25_aus_2001_2020_v1_3
+[dset-2020-2023-metadata]: https://cardat.github.io/data_inventory/bushfire_smoke_pm_exposures.html#total_and_bushfire_specific_pm25_aus_2020_2023_v1_3
 
 <!-- Organisation pages -->
 [csa-home]: https://safeair.org.au/

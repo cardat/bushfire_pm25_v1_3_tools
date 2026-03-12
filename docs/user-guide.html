@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 User guide | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)</title>
-  <meta name="description" content="6 User guide | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)" />
+  <title>6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)</title>
+  <meta name="description" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
   <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 User guide | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)" />
+  <meta property="og:title" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 User guide | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)" />
+  <meta name="twitter:title" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
   
   
   
@@ -145,8 +145,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="metadata.html"><a href="metadata.html#component-datasets"><i class="fa fa-check"></i><b>2.1</b> Component datasets</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="metadata.html"><a href="metadata.html#bushfire_specific_pm25_aus_2001_2020_v1_3"><i class="fa fa-check"></i><b>2.1.1</b> Bushfire_specific_PM25_Aus_2001_2020_v1_3</a></li>
-<li class="chapter" data-level="2.1.2" data-path="metadata.html"><a href="metadata.html#bushfire_specific_pm25_aus_2020_2023_v1_3"><i class="fa fa-check"></i><b>2.1.2</b> Bushfire_specific_PM25_Aus_2020_2023_v1_3</a></li>
+<li class="chapter" data-level="2.1.1" data-path="metadata.html"><a href="metadata.html#total_and_bushfire_specific_pm25_aus_2001_2020_v1_3"><i class="fa fa-check"></i><b>2.1.1</b> Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3</a></li>
+<li class="chapter" data-level="2.1.2" data-path="metadata.html"><a href="metadata.html#total_and_bushfire_specific_pm25_aus_2020_2023_v1_3"><i class="fa fa-check"></i><b>2.1.2</b> Total_and_Bushfire_specific_PM25_Aus_2020_2023_v1_3</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="metadata.html"><a href="metadata.html#data-dictionary"><i class="fa fa-check"></i><b>2.2</b> Data dictionary</a></li>
 </ul></li>
@@ -202,7 +202,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bushfire-specific PM<sub>2.5</sub> V1.3 data (Last edited on 2026-03-11)</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Total and Bushfire-specific PM<sub>2.5</sub> V1.3 data (Last edited on 2026-03-12)</a>
           </h1>
         </div>
 
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To read metadata from the NetCDF, use the <code>ncdf4</code> package.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="user-guide.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ncdf4)</span>
 <span id="cb1-2"><a href="user-guide.html#cb1-2" tabindex="-1"></a><span class="co"># select file</span></span>
-<span id="cb1-3"><a href="user-guide.html#cb1-3" tabindex="-1"></a>infile <span class="ot">&lt;-</span> <span class="st">&quot;Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc&quot;</span></span>
+<span id="cb1-3"><a href="user-guide.html#cb1-3" tabindex="-1"></a>infile <span class="ot">&lt;-</span> <span class="st">&quot;Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc&quot;</span></span>
 <span id="cb1-4"><a href="user-guide.html#cb1-4" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="user-guide.html#cb1-5" tabindex="-1"></a><span class="do">## read netCDF</span></span>
 <span id="cb1-6"><a href="user-guide.html#cb1-6" tabindex="-1"></a>nc <span class="ot">&lt;-</span> ncdf4<span class="sc">::</span><span class="fu">nc_open</span>(infile)</span>
@@ -227,35 +227,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="user-guide.html#cb1-8" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="user-guide.html#cb1-9" tabindex="-1"></a><span class="do">## show variable names</span></span>
 <span id="cb1-10"><a href="user-guide.html#cb1-10" tabindex="-1"></a><span class="fu">names</span>(nc<span class="sc">$</span>var)</span></code></pre></div>
-<pre><code>##  [1] &quot;albers_conical_equal_area&quot;
-##  [2] &quot;prediction_out_range&quot;     
-##  [3] &quot;predictor_out_range&quot;      
-##  [4] &quot;active_fires_10000&quot;       
-##  [5] &quot;active_fires_100000&quot;      
-##  [6] &quot;active_fires_25000&quot;       
-##  [7] &quot;active_fires_50000&quot;       
-##  [8] &quot;active_fires_500000&quot;      
-##  [9] &quot;dust_cams_p50&quot;            
-## [10] &quot;dust_cams_p75&quot;            
-## [11] &quot;dust_cams_p95&quot;            
-## [12] &quot;dust_merra_2_p50&quot;         
-## [13] &quot;dust_merra_2_p75&quot;         
-## [14] &quot;dust_merra_2_p95&quot;         
-## [15] &quot;extrapolated&quot;             
-## [16] &quot;whs_12degreeC&quot;            
-## [17] &quot;whs_15degreeC&quot;            
-## [18] &quot;whs_18degreeC&quot;            
-## [19] &quot;smoke_p95_v1_3&quot;           
-## [20] &quot;trimmed_smoke_2SD_v1_3&quot;   
-## [21] &quot;pm25_pred&quot;                
-## [22] &quot;remainder&quot;                
-## [23] &quot;seasonal&quot;                 
-## [24] &quot;trend&quot;</code></pre>
+<pre><code>##  [1] &quot;albers_conical_equal_area&quot; &quot;prediction_out_range&quot;      &quot;predictor_out_range&quot;      
+##  [4] &quot;active_fires_10000&quot;        &quot;active_fires_100000&quot;       &quot;active_fires_25000&quot;       
+##  [7] &quot;active_fires_50000&quot;        &quot;active_fires_500000&quot;       &quot;dust_cams_p50&quot;            
+## [10] &quot;dust_cams_p75&quot;             &quot;dust_cams_p95&quot;             &quot;dust_merra_2_p50&quot;         
+## [13] &quot;dust_merra_2_p75&quot;          &quot;dust_merra_2_p95&quot;          &quot;extrapolated&quot;             
+## [16] &quot;whs_12degreeC&quot;             &quot;whs_15degreeC&quot;             &quot;whs_18degreeC&quot;            
+## [19] &quot;smoke_p95_v1_3&quot;            &quot;trimmed_smoke_2SD_v1_3&quot;    &quot;pm25_pred&quot;                
+## [22] &quot;remainder&quot;                 &quot;seasonal&quot;                  &quot;trend&quot;</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="user-guide.html#cb3-1" tabindex="-1"></a><span class="do">## show global attributes</span></span>
 <span id="cb3-2"><a href="user-guide.html#cb3-2" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">ncatt_get</span>(nc, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;CDI&quot;         &quot;Conventions&quot; &quot;history&quot;    
-## [4] &quot;NCO&quot;         &quot;CDO&quot;         &quot;source&quot;     
-## [7] &quot;references&quot;  &quot;comment&quot;</code></pre>
+<pre><code>## [1] &quot;CDI&quot;         &quot;Conventions&quot; &quot;history&quot;     &quot;NCO&quot;         &quot;CDO&quot;         &quot;source&quot;      &quot;references&quot; 
+## [8] &quot;comment&quot;</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="user-guide.html#cb5-1" tabindex="-1"></a><span class="co"># ncatt_get(nc, 0, &quot;comment&quot;)     # read selected global attribute</span></span></code></pre></div>
 </div>
 <div id="read-data-with-terra" class="section level3 hasAnchor" number="6.1.2">
@@ -263,7 +246,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>terra</code> package can read and manipulate both raster data (as provided here) and vector data. See <a href="https://rspatial.github.io/terra/index.html">full documentation</a> for more.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="user-guide.html#cb6-1" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb6-2"><a href="user-guide.html#cb6-2" tabindex="-1"></a><span class="co"># select file</span></span>
-<span id="cb6-3"><a href="user-guide.html#cb6-3" tabindex="-1"></a>infile <span class="ot">&lt;-</span> <span class="st">&quot;Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc&quot;</span></span>
+<span id="cb6-3"><a href="user-guide.html#cb6-3" tabindex="-1"></a>infile <span class="ot">&lt;-</span> <span class="st">&quot;Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2003_compressed_20231130_7.nc&quot;</span></span>
 <span id="cb6-4"><a href="user-guide.html#cb6-4" tabindex="-1"></a></span>
 <span id="cb6-5"><a href="user-guide.html#cb6-5" tabindex="-1"></a><span class="co"># Read NetCDF</span></span>
 <span id="cb6-6"><a href="user-guide.html#cb6-6" tabindex="-1"></a>sdset <span class="ot">&lt;-</span> <span class="fu">sds</span>(infile)</span>
@@ -278,18 +261,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## source(s)   : bushfiresmoke_v1_3_2003_compressed_20231130_7.nc 
 ## names       : prediction_out_range, predictor_out_range, active_fires_10000, active_fires_100000, active_fires_25000, active_fires_50000, ...</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="user-guide.html#cb8-1" tabindex="-1"></a><span class="fu">names</span>(sdset)                      <span class="co"># show layers/variables</span></span></code></pre></div>
-<pre><code>##  [1] &quot;prediction_out_range&quot;   &quot;predictor_out_range&quot;   
-##  [3] &quot;active_fires_10000&quot;     &quot;active_fires_100000&quot;   
-##  [5] &quot;active_fires_25000&quot;     &quot;active_fires_50000&quot;    
-##  [7] &quot;active_fires_500000&quot;    &quot;dust_cams_p50&quot;         
-##  [9] &quot;dust_cams_p75&quot;          &quot;dust_cams_p95&quot;         
-## [11] &quot;dust_merra_2_p50&quot;       &quot;dust_merra_2_p75&quot;      
-## [13] &quot;dust_merra_2_p95&quot;       &quot;extrapolated&quot;          
-## [15] &quot;whs_12degreeC&quot;          &quot;whs_15degreeC&quot;         
-## [17] &quot;whs_18degreeC&quot;          &quot;smoke_p95_v1_3&quot;        
-## [19] &quot;trimmed_smoke_2SD_v1_3&quot; &quot;pm25_pred&quot;             
-## [21] &quot;remainder&quot;              &quot;seasonal&quot;              
-## [23] &quot;trend&quot;</code></pre>
+<pre><code>##  [1] &quot;prediction_out_range&quot;   &quot;predictor_out_range&quot;    &quot;active_fires_10000&quot;    
+##  [4] &quot;active_fires_100000&quot;    &quot;active_fires_25000&quot;     &quot;active_fires_50000&quot;    
+##  [7] &quot;active_fires_500000&quot;    &quot;dust_cams_p50&quot;          &quot;dust_cams_p75&quot;         
+## [10] &quot;dust_cams_p95&quot;          &quot;dust_merra_2_p50&quot;       &quot;dust_merra_2_p75&quot;      
+## [13] &quot;dust_merra_2_p95&quot;       &quot;extrapolated&quot;           &quot;whs_12degreeC&quot;         
+## [16] &quot;whs_15degreeC&quot;          &quot;whs_18degreeC&quot;          &quot;smoke_p95_v1_3&quot;        
+## [19] &quot;trimmed_smoke_2SD_v1_3&quot; &quot;pm25_pred&quot;              &quot;remainder&quot;             
+## [22] &quot;seasonal&quot;               &quot;trend&quot;</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="user-guide.html#cb10-1" tabindex="-1"></a><span class="co"># Look at specific layer/variable raster</span></span>
 <span id="cb10-2"><a href="user-guide.html#cb10-2" tabindex="-1"></a>r <span class="ot">&lt;-</span> sdset[[<span class="st">&quot;pm25_pred&quot;</span>]]</span>
 <span id="cb10-3"><a href="user-guide.html#cb10-3" tabindex="-1"></a></span>

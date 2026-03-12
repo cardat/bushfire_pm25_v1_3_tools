@@ -28,11 +28,11 @@ The statistical flag `smoke_p95_v1_3` is the 95^th^ percentile of estimated tota
 
 ```{r flags-statistical-example, cache=T, fig.cap = "Comparison of statistical flags using thresholds of the 95th percentile of total PM~2.5~ (top) and 2 standard deviations of the remainder (bottom) for Melbourne (Victoria).", fig.height = 8}
 infile <- file.path(datadir,
-                    "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2013_compressed_20231130_7.nc")
+                    "Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2013_compressed_20231130_7.nc")
 infile.p95 <- file.path(datadir,
-                    "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived_flags_raw_data/bushfiresmoke_v1_3_2001_2020_pm25_pred_p95.nc")
+                    "Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived_flags_raw_data/bushfiresmoke_v1_3_2001_2020_pm25_pred_p95.nc")
 infile.rem <- file.path(datadir,
-                    "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived_flags_raw_data/bushfiresmoke_v1_3_2001_2020_remainder_trimmed_stdev.nc")
+                    "Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived_flags_raw_data/bushfiresmoke_v1_3_2001_2020_remainder_trimmed_stdev.nc")
 
 
 v_loc <- vect(data.frame(name = "Melbourne (Vic)", lon = 144.992156, lat = -37.624965), crs = "epsg:4283")

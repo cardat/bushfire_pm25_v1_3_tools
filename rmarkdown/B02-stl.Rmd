@@ -4,7 +4,7 @@ The three components (Fig. \@ref(fig:method-stl-breakdown)) capture different as
 
 ```{r method-stl-breakdown, cache=T, fig.cap = "STL components and total PM2.5 concentration for a pixel in Darwin (NT) for the year 2015."}
 infile <- file.path(datadir,
-                    "Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2015_compressed_20231130_7.nc")
+                    "Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3/data_derived/bushfiresmoke_v1_3_2015_compressed_20231130_7.nc")
 
 v_loc <- vect(data.frame(name = "Darwin (NT)", lon = 130.944847, lat = -12.415435), crs = "epsg:4283")
 dat.stl <- lapply(vars, function(x){

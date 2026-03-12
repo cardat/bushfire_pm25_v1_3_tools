@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Metadata | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)</title>
-  <meta name="description" content="2 Metadata | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)" />
+  <title>2 Metadata | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)</title>
+  <meta name="description" content="2 Metadata | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
   <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Metadata | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)" />
+  <meta property="og:title" content="2 Metadata | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Metadata | Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-11)" />
+  <meta name="twitter:title" content="2 Metadata | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
   
   
   
@@ -145,8 +145,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="metadata.html"><a href="metadata.html#component-datasets"><i class="fa fa-check"></i><b>2.1</b> Component datasets</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="metadata.html"><a href="metadata.html#bushfire_specific_pm25_aus_2001_2020_v1_3"><i class="fa fa-check"></i><b>2.1.1</b> Bushfire_specific_PM25_Aus_2001_2020_v1_3</a></li>
-<li class="chapter" data-level="2.1.2" data-path="metadata.html"><a href="metadata.html#bushfire_specific_pm25_aus_2020_2023_v1_3"><i class="fa fa-check"></i><b>2.1.2</b> Bushfire_specific_PM25_Aus_2020_2023_v1_3</a></li>
+<li class="chapter" data-level="2.1.1" data-path="metadata.html"><a href="metadata.html#total_and_bushfire_specific_pm25_aus_2001_2020_v1_3"><i class="fa fa-check"></i><b>2.1.1</b> Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3</a></li>
+<li class="chapter" data-level="2.1.2" data-path="metadata.html"><a href="metadata.html#total_and_bushfire_specific_pm25_aus_2020_2023_v1_3"><i class="fa fa-check"></i><b>2.1.2</b> Total_and_Bushfire_specific_PM25_Aus_2020_2023_v1_3</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="metadata.html"><a href="metadata.html#data-dictionary"><i class="fa fa-check"></i><b>2.2</b> Data dictionary</a></li>
 </ul></li>
@@ -202,7 +202,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bushfire-specific PM<sub>2.5</sub> V1.3 data (Last edited on 2026-03-11)</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Total and Bushfire-specific PM<sub>2.5</sub> V1.3 data (Last edited on 2026-03-12)</a>
           </h1>
         </div>
 
@@ -222,8 +222,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Further description of the methodology can be found in the section <a href="methodology.html#methodology">Methodology</a>.</p>
 <div id="component-datasets" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Component datasets<a href="metadata.html#component-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="bushfire_specific_pm25_aus_2001_2020_v1_3" class="section level3 hasAnchor" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Bushfire_specific_PM25_Aus_2001_2020_v1_3<a href="metadata.html#bushfire_specific_pm25_aus_2001_2020_v1_3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="total_and_bushfire_specific_pm25_aus_2001_2020_v1_3" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3<a href="metadata.html#total_and_bushfire_specific_pm25_aus_2001_2020_v1_3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This is the original dataset as described in the published paper and covers days from 2001-01-01 to 2020-06-30. The random forest model was trained on observed daily data from regulatory monitors then used to predict over the 5km grid. The total PM<sub>2.5</sub> predictions were then broken down into trend, seasonal and remainder components for each pixel through STL decomposition over 2001-2019 (see <a href="methodology.html#methodology-stl">Methodology - STL decomposition</a>), excluding 2020 due to the exceptional bushfire events of 2019-2020. STL components for 2020 were filled by assuming identical daily seasonal and trend components for 2019 and 2020, calculating the 2020 remainder component as the difference between total PM<sub>2.5</sub> (2020) and seasonal + trend (2019).</p>
 <p>Statistical thresholds for extreme PM<sub>2.5</sub> were calculated for each pixel—both the 95<sup>th</sup> percentile of predicted PM<sub>2.5</sub> and standard deviation of the trimmed (to 99<sup>th</sup> percentile) remainder.</p>
 <p>Binary flags for identification of bushfire events were then produced from the statistical thresholds and other external data sources (see Table <a href="metadata.html#tab:data-dictionary-flags">2.2</a> for full listing of flags):</p>
@@ -235,8 +235,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Daily predicted PM<sub>2.5</sub>, STL components and binary flags are stored as a NetCDF file by year in the <code>data_derived/</code> directory. The calculated statistical thresholds are stored in <code>data_derived_raw_flags/</code>, also as NetCDFs. Note each threshold is a single layer (no time component) as both have been calculated across all years 2001-2020.</p>
 </div>
-<div id="bushfire_specific_pm25_aus_2020_2023_v1_3" class="section level3 hasAnchor" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Bushfire_specific_PM25_Aus_2020_2023_v1_3<a href="metadata.html#bushfire_specific_pm25_aus_2020_2023_v1_3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="total_and_bushfire_specific_pm25_aus_2020_2023_v1_3" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Total_and_Bushfire_specific_PM25_Aus_2020_2023_v1_3<a href="metadata.html#total_and_bushfire_specific_pm25_aus_2020_2023_v1_3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The 2020-2023 update uses the original random model (trained on 2001-2020 data) to predict daily PM<sub>2.5</sub> from 2020-01-01 to 2023-12-31. STL decomposition was performed with only 2021-2023 data, omitting 2020 data as in the original dataset. 2020 STL components were infilled by assuming identical trend and seasonal components as 2021, and taking the difference between total PM<sub>2.5</sub> (2020) and seasonal + trend (2021) to be the remainder component.</p>
 <p>Consequently the STL components for the overlapping period of the two datasets (2020-01-01 to 2020-06-30) are not identical. There may also be visible discontinuity of STL components between the original 2001-2020 and 2020-2023 update.</p>
 <p>Both predicted PM<sub>2.5</sub> and STL components are available in the <code>data_derived/</code> folder as NetCDF files by year. Statistical thresholds and other flags were not produced.</p>
