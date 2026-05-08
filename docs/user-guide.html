@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)</title>
-  <meta name="description" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
+  <title>6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-05-08)</title>
+  <meta name="description" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-05-08)" />
   <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
+  <meta property="og:title" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-05-08)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-03-12)" />
+  <meta name="twitter:title" content="6 User guide | Total and Bushfire-specific PM2.5 V1.3 data (Last edited on 2026-05-08)" />
   
   
   
@@ -153,7 +153,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="dataset-licencing.html"><a href="dataset-licencing.html"><i class="fa fa-check"></i><b>3</b> Dataset licencing</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="dataset-licencing.html"><a href="dataset-licencing.html#data-sharing-and-co-authorship-policy"><i class="fa fa-check"></i><b>3.1</b> Data sharing and co-authorship policy</a></li>
-<li class="chapter" data-level="3.2" data-path="dataset-licencing.html"><a href="dataset-licencing.html#applying-for-data-access"><i class="fa fa-check"></i><b>3.2</b> Applying for data access</a></li>
+<li class="chapter" data-level="3.2" data-path="dataset-licencing.html"><a href="dataset-licencing.html#suggested-citation"><i class="fa fa-check"></i><b>3.2</b> Suggested citation</a></li>
+<li class="chapter" data-level="3.3" data-path="dataset-licencing.html"><a href="dataset-licencing.html#applying-for-data-access"><i class="fa fa-check"></i><b>3.3</b> Applying for data access</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="methodology.html"><a href="methodology.html"><i class="fa fa-check"></i><b>4</b> Methodology</a>
 <ul>
@@ -202,7 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Total and Bushfire-specific PM<sub>2.5</sub> V1.3 data (Last edited on 2026-03-12)</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Total and Bushfire-specific PM<sub>2.5</sub> V1.3 data (Last edited on 2026-05-08)</a>
           </h1>
         </div>
 
@@ -227,18 +228,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="user-guide.html#cb1-8" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="user-guide.html#cb1-9" tabindex="-1"></a><span class="do">## show variable names</span></span>
 <span id="cb1-10"><a href="user-guide.html#cb1-10" tabindex="-1"></a><span class="fu">names</span>(nc<span class="sc">$</span>var)</span></code></pre></div>
-<pre><code>##  [1] &quot;albers_conical_equal_area&quot; &quot;prediction_out_range&quot;      &quot;predictor_out_range&quot;      
-##  [4] &quot;active_fires_10000&quot;        &quot;active_fires_100000&quot;       &quot;active_fires_25000&quot;       
-##  [7] &quot;active_fires_50000&quot;        &quot;active_fires_500000&quot;       &quot;dust_cams_p50&quot;            
-## [10] &quot;dust_cams_p75&quot;             &quot;dust_cams_p95&quot;             &quot;dust_merra_2_p50&quot;         
-## [13] &quot;dust_merra_2_p75&quot;          &quot;dust_merra_2_p95&quot;          &quot;extrapolated&quot;             
-## [16] &quot;whs_12degreeC&quot;             &quot;whs_15degreeC&quot;             &quot;whs_18degreeC&quot;            
-## [19] &quot;smoke_p95_v1_3&quot;            &quot;trimmed_smoke_2SD_v1_3&quot;    &quot;pm25_pred&quot;                
-## [22] &quot;remainder&quot;                 &quot;seasonal&quot;                  &quot;trend&quot;</code></pre>
+<pre><code>##  [1] &quot;albers_conical_equal_area&quot; &quot;prediction_out_range&quot;     
+##  [3] &quot;predictor_out_range&quot;       &quot;active_fires_10000&quot;       
+##  [5] &quot;active_fires_100000&quot;       &quot;active_fires_25000&quot;       
+##  [7] &quot;active_fires_50000&quot;        &quot;active_fires_500000&quot;      
+##  [9] &quot;dust_cams_p50&quot;             &quot;dust_cams_p75&quot;            
+## [11] &quot;dust_cams_p95&quot;             &quot;dust_merra_2_p50&quot;         
+## [13] &quot;dust_merra_2_p75&quot;          &quot;dust_merra_2_p95&quot;         
+## [15] &quot;extrapolated&quot;              &quot;whs_12degreeC&quot;            
+## [17] &quot;whs_15degreeC&quot;             &quot;whs_18degreeC&quot;            
+## [19] &quot;smoke_p95_v1_3&quot;            &quot;trimmed_smoke_2SD_v1_3&quot;   
+## [21] &quot;pm25_pred&quot;                 &quot;remainder&quot;                
+## [23] &quot;seasonal&quot;                  &quot;trend&quot;</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="user-guide.html#cb3-1" tabindex="-1"></a><span class="do">## show global attributes</span></span>
 <span id="cb3-2"><a href="user-guide.html#cb3-2" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">ncatt_get</span>(nc, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;CDI&quot;         &quot;Conventions&quot; &quot;history&quot;     &quot;NCO&quot;         &quot;CDO&quot;         &quot;source&quot;      &quot;references&quot; 
-## [8] &quot;comment&quot;</code></pre>
+<pre><code>## [1] &quot;CDI&quot;         &quot;Conventions&quot; &quot;history&quot;     &quot;NCO&quot;        
+## [5] &quot;CDO&quot;         &quot;source&quot;      &quot;references&quot;  &quot;comment&quot;</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="user-guide.html#cb5-1" tabindex="-1"></a><span class="co"># ncatt_get(nc, 0, &quot;comment&quot;)     # read selected global attribute</span></span></code></pre></div>
 </div>
 <div id="read-data-with-terra" class="section level3 hasAnchor" number="6.1.2">
@@ -261,14 +266,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## source(s)   : bushfiresmoke_v1_3_2003_compressed_20231130_7.nc 
 ## names       : prediction_out_range, predictor_out_range, active_fires_10000, active_fires_100000, active_fires_25000, active_fires_50000, ...</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="user-guide.html#cb8-1" tabindex="-1"></a><span class="fu">names</span>(sdset)                      <span class="co"># show layers/variables</span></span></code></pre></div>
-<pre><code>##  [1] &quot;prediction_out_range&quot;   &quot;predictor_out_range&quot;    &quot;active_fires_10000&quot;    
-##  [4] &quot;active_fires_100000&quot;    &quot;active_fires_25000&quot;     &quot;active_fires_50000&quot;    
-##  [7] &quot;active_fires_500000&quot;    &quot;dust_cams_p50&quot;          &quot;dust_cams_p75&quot;         
-## [10] &quot;dust_cams_p95&quot;          &quot;dust_merra_2_p50&quot;       &quot;dust_merra_2_p75&quot;      
-## [13] &quot;dust_merra_2_p95&quot;       &quot;extrapolated&quot;           &quot;whs_12degreeC&quot;         
-## [16] &quot;whs_15degreeC&quot;          &quot;whs_18degreeC&quot;          &quot;smoke_p95_v1_3&quot;        
-## [19] &quot;trimmed_smoke_2SD_v1_3&quot; &quot;pm25_pred&quot;              &quot;remainder&quot;             
-## [22] &quot;seasonal&quot;               &quot;trend&quot;</code></pre>
+<pre><code>##  [1] &quot;prediction_out_range&quot;   &quot;predictor_out_range&quot;   
+##  [3] &quot;active_fires_10000&quot;     &quot;active_fires_100000&quot;   
+##  [5] &quot;active_fires_25000&quot;     &quot;active_fires_50000&quot;    
+##  [7] &quot;active_fires_500000&quot;    &quot;dust_cams_p50&quot;         
+##  [9] &quot;dust_cams_p75&quot;          &quot;dust_cams_p95&quot;         
+## [11] &quot;dust_merra_2_p50&quot;       &quot;dust_merra_2_p75&quot;      
+## [13] &quot;dust_merra_2_p95&quot;       &quot;extrapolated&quot;          
+## [15] &quot;whs_12degreeC&quot;          &quot;whs_15degreeC&quot;         
+## [17] &quot;whs_18degreeC&quot;          &quot;smoke_p95_v1_3&quot;        
+## [19] &quot;trimmed_smoke_2SD_v1_3&quot; &quot;pm25_pred&quot;             
+## [21] &quot;remainder&quot;              &quot;seasonal&quot;              
+## [23] &quot;trend&quot;</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="user-guide.html#cb10-1" tabindex="-1"></a><span class="co"># Look at specific layer/variable raster</span></span>
 <span id="cb10-2"><a href="user-guide.html#cb10-2" tabindex="-1"></a>r <span class="ot">&lt;-</span> sdset[[<span class="st">&quot;pm25_pred&quot;</span>]]</span>
 <span id="cb10-3"><a href="user-guide.html#cb10-3" tabindex="-1"></a></span>

@@ -14,8 +14,19 @@ Our dataset represents a valuable resource for advancing public health knowledge
 
 Through this policy, we aim to strike a balance between promoting valuable research and maintaining the integrity of our data and the contributions of our team. We're committed to supporting work that advances public health knowledge while ensuring fair and appropriate attribution of scientific contributions. By providing clear guidelines on data usage, acknowledgement, and potential co-authorship, we hope to foster productive collaborations and impactful research outcomes.
 
+## Suggested citation
+
+The datasets may be cited as follows:
+
+> Hanigan, I., Yuen, C., Gopi, K., Borchers-Arriagada, N., van Buskirk, J. & Morgan, G. (2023): Bushfire specific PM2.5 output from v1.3 based on satellite and other land use and other predictors for Australia 2001-2020 produced for the CAR Bushfire Smoke Exposures project. CAR. Downloaded from CARDAT (Dataset). <https://doi.org/10.17605/OSF.IO/WQK4T>
+
+> Hanigan, I., Yuen, C., Gopi, K., Borchers-Arriagada, N., van Buskirk, J. & Morgan, G. (2025): Bushfire specific PM2.5 output from v1.3 based on satellite and other land use and other predictors for Australia 2020-2023 produced for the CAR Bushfire Smoke Exposures project. CAR. Downloaded from CARDAT (Dataset). <https://doi.org/10.17605/OSF.IO/47C6B>
+
+
+
 ## Applying for data access
 
 Data access requests can be submitted through the [CARDAT Data Access Form][cardat-form], specifying the dataset (*Total_and_Bushfire_specific_PM25_Aus_2001_2020_v1_3*, *Total_and_Bushfire_specific_PM25_Aus_2020_2023_v1_3*, or both) requested. Please provide a reasonable description of your intended use of the data in accordance with clause **(1)** above, and understand the expectations regarding acknowledgement (clause **(3)**) and co-authorship (clause **(4)**).
 
 Note that these data are otherwise restricted and may not be on-shared or used for any purposes beyond that described in your request without explicit permission.
+

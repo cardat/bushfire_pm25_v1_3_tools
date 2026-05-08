@@ -14,6 +14,7 @@ total_and_bushfire_specific_pm25_aus_2020_2023_v1_3
 data-dictionary
 dataset-licencing
 data-sharing-and-co-authorship-policy
+suggested-citation
 applying-for-data-access
 methodology
 pm2.5-estimation
