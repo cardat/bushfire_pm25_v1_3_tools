@@ -2,4 +2,4 @@
 
 # CART model
 
-Classification and regression tree (CART) model trained using a set of known bushfire events. *TODO*
+A Classification and Regression Tree (CART) model trained using a set of known bushfire events is described in [this MODSIM 2025 conference paper][paper-cart-model].

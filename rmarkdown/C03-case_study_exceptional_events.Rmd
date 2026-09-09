@@ -1,5 +1,3 @@
 # Exceptional PM~2.5~ events
 
-HIA Study on mortality and exceptional PM~2.5~ events.
-
-[Mortality burden attributable to exceptional PM~2.5~ air pollution events in Australian cities: A health impact assessment][paper-exceptional-events]
+Health impact assessment study of non-accidental deaths and excess PM~2.5~ exposure due to exceptional PM~2.5~ events, as calculated from STL decomposition of total PM~2.5~, is described in ["Mortality burden attributable to exceptional PM~2.5~ air pollution events in Australian cities: A health impact assessment"][paper-exceptional-events].
